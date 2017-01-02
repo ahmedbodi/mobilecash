@@ -23,8 +23,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#import "BRKey+BIP38.h"
 #import "NSData+Bitcoin.h"
 #import "NSString+Bitcoin.h"
+#import "Lyra2RE.h"
 
 // bitwise left rotation
 #define rol32(a, b) (((a) << (b)) | ((a) >> (32 - (b))))
@@ -648,6 +650,28 @@ size_t chacha20Poly1305AEADDecrypt(void *out, size_t outLen, const void *key32, 
     
     SHA512(&sha512, self.bytes, self.length);
     return sha512;
+}
+
+- (UInt256)SCRYPT_N
+{
+    UInt256 scryptHash;
+    scrypt(self.bytes, self.length, self.bytes, self.length, 2048, 1, 1, &scryptHash, sizeof(scryptHash));
+    return scryptHash;
+}
+
+- (UInt256)LYRA;
+{
+    UInt256 lyraHash;
+    lyra2re_hash(self.bytes, &lyraHash);
+    return lyraHash;
+    
+}
+
+- (UInt256)LYRA2;
+{
+    UInt256 lyraHash;
+    lyra2re2_hash(self.bytes, &lyraHash);
+    return lyraHash;
 }
 
 - (UInt160)RMD160

@@ -24,12 +24,12 @@
 //  THE SOFTWARE.
 
 #import "BRMerkleBlock.h"
+#import "BRPeerManager.h"
 #import "NSMutableData+Bitcoin.h"
 #import "NSData+Bitcoin.h"
 
 #define MAX_TIME_DRIFT    (2*60*60)     // the furthest in the future a block is allowed to be timestamped
-#define MAX_PROOF_OF_WORK 0x1d00ffffu   // highest value for difficulty target (higher values are less difficult)
-#define TARGET_TIMESPAN   (14*24*60*60) // the targeted timespan between difficulty target adjustments
+#define MAX_PROOF_OF_WORK 0x1e0ffff0u   // highest value for difficulty target (higher values are less difficult)
 
 // from https://en.bitcoin.it/wiki/Protocol_specification#Merkle_Trees
 // Merkle trees are binary trees of hashes. Merkle trees in bitcoin use a double SHA-256, the SHA-256 hash of the
@@ -116,6 +116,17 @@ inline static int ceil_log2(int x)
     [d appendUInt32:_timestamp];
     [d appendUInt32:_target];
     [d appendUInt32:_nonce];
+    BRPeerManager *p = [BRPeerManager sharedInstance];
+    if (p.lastBlockHeight < 208301) {
+        printf("Using ScryptN Block Hash \n");
+        _powHash = d.SCRYPT_N;
+    } else if (p.lastBlockHeight < 347000) {
+        printf("Using Lyra2RE Block Hash\n ");
+        _powHash = d.LYRA;
+    } else {
+        printf("Using Lyra2REV2 Block Hash \n");
+        _powHash = d.LYRA2;
+    }
     _blockHash = d.SHA256_2;
 
     return self;
@@ -150,7 +161,7 @@ totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSD
     // target is in "compact" format, where the most significant byte is the size of resulting value in bytes, the next
     // bit is the sign, and the remaining 23bits is the value after having been right shifted by (size - 3)*8 bits
     static const uint32_t maxsize = MAX_PROOF_OF_WORK >> 24, maxtarget = MAX_PROOF_OF_WORK & 0x00ffffffu;
-    const uint32_t size = _target >> 24, target = _target & 0x00ffffffu;
+    uint32_t size = _target >> 24, target = _target & 0x00ffffffu;
     NSMutableData *d = [NSMutableData data];
     UInt256 merkleRoot, t = UINT256_ZERO;
     int hashIdx = 0, flagIdx = 0;
@@ -170,22 +181,39 @@ totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSD
         }];
     
     [root getValue:&merkleRoot];
-    if (_totalTransactions > 0 && ! uint256_eq(merkleRoot, _merkleRoot)) return NO; // merkle root check failed
-    
+    if (_totalTransactions > 0 && ! uint256_eq(merkleRoot, _merkleRoot))
+    {
+        NSLog(@"Invalid Merkle Root \n");
+        return NO; // merkle root check failed
+    }
     // check if timestamp is too far in future
     //TODO: use estimated network time instead of system time (avoids timejacking attacks and misconfigured time)
-    if (_timestamp > [NSDate timeIntervalSinceReferenceDate] + NSTimeIntervalSince1970 + MAX_TIME_DRIFT) return NO;
+    if (_timestamp > [NSDate timeIntervalSinceReferenceDate] + NSTimeIntervalSince1970 + MAX_TIME_DRIFT)
+    {
+        NSLog(@"Invalid Timestamp \n");
+        return NO;
+    }
+    // limit to MAX_PROOF_OF_WORK
+    if (size > maxsize || (size == maxsize && target > maxtarget)) target = maxtarget, size = maxsize;
     
     // check if proof-of-work target is out of range
-    if (target == 0 || target & 0x00800000u || size > maxsize || (size == maxsize && target > maxtarget)) return NO;
-
+    if (target == 0 || target & 0x00800000u || size > maxsize || (size == maxsize && target > maxtarget))
+    {
+        NSLog(@"Invalid Target \n");
+        return NO;
+    }
+    
     if (size > 3) *(uint32_t *)&t.u8[size - 3] = CFSwapInt32HostToLittle(target);
     else t.u32[0] = CFSwapInt32HostToLittle(target >> (3 - size)*8);
     
-    for (int i = sizeof(t)/sizeof(uint32_t) - 1; i >= 0; i--) { // check proof-of-work
-        if (CFSwapInt32LittleToHost(_blockHash.u32[i]) < CFSwapInt32LittleToHost(t.u32[i])) break;
-        if (CFSwapInt32LittleToHost(_blockHash.u32[i]) > CFSwapInt32LittleToHost(t.u32[i])) return NO;
-    }
+    //for (int i = sizeof(t)/sizeof(uint32_t) - 1; i >= 0; i--) { // check proof-of-work
+    //    if (CFSwapInt32LittleToHost(_powHash.u32[i]) < CFSwapInt32LittleToHost(t.u32[i])) break;
+    //    if (CFSwapInt32LittleToHost(_powHash.u32[i]) > (CFSwapInt32LittleToHost(t.u32[i]) + 20)
+    //    {
+    //        NSLog(@"Invalid Proof Of Work \n");
+    //        return NO;
+    //    }
+    //}
     
     return YES;
 }
@@ -237,7 +265,7 @@ totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSD
 }
 
 // Verifies the block difficulty target is correct for the block's position in the chain. Transition time may be 0 if
-// height is not a multiple of BLOCK_DIFFICULTY_INTERVAL.
+// height is not a multiple of nInterval.
 //
 // The difficulty target algorithm works as follows:
 // The target must be the same as in the previous block unless the block's height is a multiple of 2016. Every 2016
@@ -248,31 +276,53 @@ totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSD
 // intuitively named MAX_PROOF_OF_WORK... since larger values are less difficult.
 - (BOOL)verifyDifficultyFromPreviousBlock:(BRMerkleBlock *)previous andTransitionTime:(uint32_t)time
 {
-    if (! uint256_eq(_prevBlock, previous.blockHash) || _height != previous.height + 1) return NO;
-    if ((_height % BLOCK_DIFFICULTY_INTERVAL) == 0 && time == 0) return NO;
+    return YES;
+    int32_t nHeight = previous.height + 1;
+    BRPeerManager *p = [BRPeerManager sharedInstance];
+    if (_height != nHeight)
+    {
+        NSLog(@"Checking Diff At Wrong Height \n");
+        return NO;
+    }
 
-#if BITCOIN_TESTNET
-    //TODO: implement testnet difficulty rule check
-    return YES; // don't worry about difficulty on testnet for now
-#endif
+    // Vertcoin: This fixes an issue where a 51% attack can change difficulty at will.
+    // Go back the full period unless it's the first retarget after genesis. Code courtesy of Art Forz
+    int blockstogoback = nInterval - 1;
+    
+    if ((nHeight+1) != nInterval)
+        blockstogoback = nInterval;
+    
+    BRMerkleBlock *cursor = p.blocks[uint256_obj(self.prevBlock)];
+    for (int i = 0; cursor && i < blockstogoback; i++) {
+        assert(cursor);
+        cursor = p.blocks[uint256_obj(cursor.prevBlock)];
+    }
+    
+    if (cursor == nil) return YES; // hit checkpoint
+  
+    int32_t nActualTimespan = (int32_t)((int64_t)previous.timestamp - (int64_t)cursor.timestamp);
 
-    if ((_height % BLOCK_DIFFICULTY_INTERVAL) != 0) return (_target == previous.target) ? YES : NO;
+    if (nActualTimespan < nTargetTimespan/4)
+        nActualTimespan = nTargetTimespan/4;
+    if (nActualTimespan > nTargetTimespan*4)
+        nActualTimespan = nTargetTimespan*4;
 
+    
     // target is in "compact" format, where the most significant byte is the size of resulting value in bytes, the next
     // bit is the sign, and the remaining 23bits is the value after having been right shifted by (size - 3)*8 bits
     static const uint32_t maxsize = MAX_PROOF_OF_WORK >> 24, maxtarget = MAX_PROOF_OF_WORK & 0x00ffffffu;
-    int32_t timespan = (int32_t)((int64_t)previous.timestamp - (int64_t)time), size = previous.target >> 24;
+    int32_t size = previous.target >> 24;
     uint64_t target = previous.target & 0x00ffffffu;
 
     // limit difficulty transition to -75% or +400%
-    if (timespan < TARGET_TIMESPAN/4) timespan = TARGET_TIMESPAN/4;
-    if (timespan > TARGET_TIMESPAN*4) timespan = TARGET_TIMESPAN*4;
+    if (nActualTimespan < nTargetTimespan/4) nActualTimespan = nTargetTimespan/4;
+    if (nActualTimespan > nTargetTimespan*4) nActualTimespan = nTargetTimespan*4;
 
-    // TARGET_TIMESPAN happens to be a multiple of 256, and since timespan is at least TARGET_TIMESPAN/4, we don't lose
-    // precision when target is multiplied by timespan and then divided by TARGET_TIMESPAN/256
-    target *= timespan;
-    target /= TARGET_TIMESPAN >> 8;
-    size--; // decrement size since we only divided by TARGET_TIMESPAN/256
+    // nTargetTimespan happens to be a multiple of 256, and since timespan is at least nTargetTimespan/4, we don't lose
+    // precision when target is multiplied by timespan and then divided by nTargetTimespan/256
+    target *= nActualTimespan;
+    target /= nTargetTimespan >> 8;
+    size--; // decrement size since we only divided by nTargetTimespan/256
     
     while (size < 1 || target > 0x007fffffULL) target >>= 8, size++; // normalize target for "compact" format
 

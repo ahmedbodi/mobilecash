@@ -25,14 +25,18 @@
 
 #import <Foundation/Foundation.h>
 
-#define BLOCK_DIFFICULTY_INTERVAL 2016      // number of blocks between difficulty target adjustments
 #define BLOCK_UNKNOWN_HEIGHT      INT32_MAX
+
+static const int64_t nTargetTimespan = 3.5 * 24 * 60 * 60; // Vertcoin: 3.5 days
+static const int64_t nTargetSpacing = 2.5 * 60; // Vertcoin: 2.5 minutes
+static const int64_t nInterval = nTargetTimespan / nTargetSpacing;
 
 typedef union _UInt256 UInt256;
 
 @interface BRMerkleBlock : NSObject
 
 @property (nonatomic, readonly) UInt256 blockHash;
+@property (nonatomic, readonly) UInt256 powHash;
 @property (nonatomic, readonly) uint32_t version;
 @property (nonatomic, readonly) UInt256 prevBlock;
 @property (nonatomic, readonly) UInt256 merkleRoot;

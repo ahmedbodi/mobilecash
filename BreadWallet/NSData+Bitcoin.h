@@ -133,6 +133,9 @@ size_t chacha20Poly1305AEADDecrypt(void *_Nullable out, size_t outLen, const voi
 - (UInt160)SHA1;
 - (UInt256)SHA256;
 - (UInt256)SHA256_2;
+- (UInt256)SCRYPT_N;
+- (UInt256)LYRA;
+- (UInt256)LYRA2;
 - (UInt512)SHA512;
 - (UInt160)RMD160;
 - (UInt160)hash160;

@@ -24,6 +24,7 @@
 //  THE SOFTWARE.
 
 #import "BRPeer.h"
+#import "BRPeerManager.h"
 #import "BRTransaction.h"
 #import "BRMerkleBlock.h"
 #import "NSMutableData+Bitcoin.h"
@@ -42,8 +43,8 @@
 #define PROTOCOL_VERSION   70013
 #define MIN_PROTO_VERSION  70002 // peers earlier than this protocol version not supported (need v0.9 txFee relay rules)
 #define LOCAL_HOST         0x7f000001
-#define CONNECT_TIMEOUT    3.0
-#define MEMPOOL_TIMEOUT    5.0
+#define CONNECT_TIMEOUT    30.0
+#define MEMPOOL_TIMEOUT    30.0
 
 typedef enum : uint32_t {
     inv_error = 0,
@@ -798,8 +799,26 @@ services:(uint64_t)services
 
     if (count >= 2000 || t + 7*24*60*60 >= self.earliestKeyTime - 2*60*60) {
         NSValue *firstHash = uint256_obj([message subdataWithRange:NSMakeRange(l, 80)].SHA256_2),
-                *lastHash = uint256_obj([message subdataWithRange:NSMakeRange(l + 81*(count - 1), 80)].SHA256_2);
-
+        *lastHash = uint256_obj([message subdataWithRange:NSMakeRange(l + 81*(count - 1), 80)].SHA256_2);
+        
+        /*
+        NSValue *firstHash, *lastHash;
+        BRPeerManager *p = [BRPeerManager sharedInstance];
+        printf("Current Height: %u \n", p.lastBlockHeight);
+        if (p.lastBlockHeight < 208301) {
+            printf("Using ScryptN Block Hash \n");
+            firstHash = uint256_obj([message subdataWithRange:NSMakeRange(l, 80)].SCRYPT_N);
+            lastHash = uint256_obj([message subdataWithRange:NSMakeRange(l + 81*(count - 1), 80)].SCRYPT_N);
+        } else if (p.lastBlockHeight < 347000) {
+            printf("Using Lyra2RE Block Hash\n ");
+            firstHash = uint256_obj([message subdataWithRange:NSMakeRange(l, 80)].LYRA);
+            lastHash = uint256_obj([message subdataWithRange:NSMakeRange(l + 81*(count - 1), 80)].LYRA);
+        } else {
+            printf("Using Lyra2REV2 Block Hash \n");
+            firstHash = uint256_obj([message subdataWithRange:NSMakeRange(l, 80)].LYRA2);
+            lastHash = uint256_obj([message subdataWithRange:NSMakeRange(l + 81*(count - 1), 80)].LYRA2);
+        }*/
+        
         if (t + 7*24*60*60 >= self.earliestKeyTime - 2*60*60) { // request blocks for the remainder of the chain
             t = [message UInt32AtOffset:l + 81 + 68] - NSTimeIntervalSince1970;
 
@@ -807,7 +826,14 @@ services:(uint64_t)services
                 off += 81;
                 t = [message UInt32AtOffset:off + 81 + 68] - NSTimeIntervalSince1970;
             }
-
+/*
+            if (p.lastBlockHeight < 208301) {
+                lastHash = uint256_obj([message subdataWithRange:NSMakeRange(off, 80)].SCRYPT_N);
+            } else if (p.lastBlockHeight < 347000) {
+                lastHash = uint256_obj([message subdataWithRange:NSMakeRange(off, 80)].LYRA);
+            } else {
+                lastHash = uint256_obj([message subdataWithRange:NSMakeRange(off, 80)].LYRA2);
+            }*/
             lastHash = uint256_obj([message subdataWithRange:NSMakeRange(off, 80)].SHA256_2);
             NSLog(@"%@:%u calling getblocks with locators: %@", self.host, self.port, @[lastHash, firstHash]);
             [self sendGetblocksMessageWithLocators:@[lastHash, firstHash] andHashStop:UINT256_ZERO];

@@ -193,7 +193,7 @@ static void blockmix_salsa8(uint64_t *dest, const uint64_t *src, uint64_t *b, in
 }
 
 // scrypt key derivation: http://www.tarsnap.com/scrypt.html
-static void scrypt(const void *pw, size_t pwlen, const void *salt, size_t slen, long n, int r, int p,
+void scrypt(const void *pw, size_t pwlen, const void *salt, size_t slen, long n, int r, int p,
                    void *dk, size_t dklen)
 {
     uint64_t x[16*r], y[16*r], z[8], *v = malloc(128*r*n), m;
