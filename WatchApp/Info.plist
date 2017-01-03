@@ -28,7 +28,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>org.ahmedbodi.vertwallet</string>
+	<string>com.ahmedbodiwala.vertlet</string>
 	<key>WKWatchKitApp</key>
 	<true/>
 </dict>

@@ -39,7 +39,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *startLabel, *recoverLabel, *warningLabel;
 @property (nonatomic, strong) IBOutlet UIButton *newwalletButton, *recoverButton, *generateButton, *showButton;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *logoXCenter, *walletXCenter, *restoreXCenter,
-                                                          *paralaxXLeft, *wallpaperXLeft;
+*paralaxXLeft, *wallpaperXLeft;
 
 @end
 
@@ -50,9 +50,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-        
+    
     self.navigationController.delegate = self;
-
+    
     self.newwalletButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.recoverButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     
@@ -61,19 +61,19 @@
     self.newwalletButton.titleLabel.adjustsLetterSpacingToFitWidth = YES;
     self.recoverButton.titleLabel.adjustsLetterSpacingToFitWidth = YES;
 #pragma clang diagnostic pop
-
+    
     self.foregroundObserver =
-        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil
-        queue:nil usingBlock:^(NSNotification *note) {
-            [self animateWallpaper];
-        }];
+    [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil
+                                                       queue:nil usingBlock:^(NSNotification *note) {
+                                                           [self animateWallpaper];
+                                                       }];
     
     self.backgroundObserver =
-        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil
-        queue:nil usingBlock:^(NSNotification *note) {
-            self.wallpaperXLeft.constant = 0;
-            [self.wallpaper.superview layoutIfNeeded];
-        }];
+    [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil
+                                                       queue:nil usingBlock:^(NSNotification *note) {
+                                                           self.wallpaperXLeft.constant = 0;
+                                                           [self.wallpaper.superview layoutIfNeeded];
+                                                       }];
 }
 
 - (void)dealloc
@@ -86,7 +86,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:animated];
     
     if (self.hasAppeared) {
@@ -103,7 +103,7 @@
 {
     [super viewDidAppear:animated];
     [BREventManager saveEvent:@"welcome:shown"];
-
+    
     dispatch_async(dispatch_get_main_queue(), ^{ // animation sometimes doesn't work if run directly in viewDidAppear
 #if SNAPSHOT
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
@@ -114,7 +114,7 @@
         self.paralaxXLeft.constant = self.view.frame.size.width*PARALAX_RATIO;
         return;
 #endif
-
+        
         if (! [BRWalletManager sharedInstance].noWallet) { // sanity check
             [self.navigationController.presentingViewController dismissViewControllerAnimated:NO completion:nil];
         }
@@ -122,31 +122,31 @@
         if (! self.hasAppeared) {
             self.hasAppeared = YES;
             self.paralaxXLeft = [NSLayoutConstraint constraintWithItem:self.navigationController.view
-                                 attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.paralax
-                                 attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0];
+                                                             attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.paralax
+                                                             attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0];
             [self.navigationController.view insertSubview:self.paralax atIndex:0];
             [self.navigationController.view addConstraint:self.paralaxXLeft];
             [self.navigationController.view
              addConstraint:[NSLayoutConstraint constraintWithItem:self.navigationController.view
-                            attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.paralax
-                            attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-//            self.navigationController.view.backgroundColor = self.paralax.backgroundColor;
+                                                        attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.paralax
+                                                        attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
+            //            self.navigationController.view.backgroundColor = self.paralax.backgroundColor;
             self.navigationController.view.clipsToBounds = YES;
             self.navigationController.view.backgroundColor = [UIColor blackColor];
             [self.navigationController.view layoutIfNeeded];
             self.logoXCenter.constant = self.view.frame.size.width;
             self.walletXCenter.constant = 0.0;
             self.restoreXCenter.constant = 0.0;
-//            self.paralaxXLeft.constant = self.view.frame.size.width*PARALAX_RATIO;
+            //            self.paralaxXLeft.constant = self.view.frame.size.width*PARALAX_RATIO;
             self.navigationItem.titleView.hidden = NO;
             self.navigationItem.titleView.alpha = 0.0;
-
+            
             [UIView animateWithDuration:0.35 delay:1.0 usingSpringWithDamping:0.8 initialSpringVelocity:0.0
-            options:UIViewAnimationOptionCurveEaseOut animations:^{
-                [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
-                self.navigationItem.titleView.alpha = 1.0;
-                [self.navigationController.view layoutIfNeeded];
-            } completion:nil];
+                                options:UIViewAnimationOptionCurveEaseOut animations:^{
+                                    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+                                    self.navigationItem.titleView.alpha = 1.0;
+                                    [self.navigationController.view layoutIfNeeded];
+                                } completion:nil];
         }
         
         [self animateWallpaper];
@@ -164,16 +164,16 @@
 {
     if (self.animating) return;
     self.animating = YES;
-
+    
     self.wallpaperXLeft.constant = -240.0;
-
+    
     [UIView animateWithDuration:30.0 delay:0.0
-    options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse
-    animations:^{
-        [self.wallpaper.superview layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        self.animating = NO;
-    }];
+                        options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse
+                     animations:^{
+                         [self.wallpaper.superview layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                         self.animating = NO;
+                     }];
 }
 
 // MARK: IBAction
@@ -192,7 +192,7 @@
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     self.generateButton.titleLabel.adjustsLetterSpacingToFitWidth = YES;
 #pragma clang diagnostic pop
-
+    
     self.warningLabel = (id)[c.view viewWithTag:2];
     self.showButton = (id)[c.view viewWithTag:3];
     [self.showButton addTarget:self action:@selector(show:) forControlEvents:UIControlEventTouchUpInside];
@@ -205,20 +205,20 @@
     
     noEye.image = [UIImage imageNamed:@"no-eye"];
     [s replaceCharactersInRange:[s.string rangeOfString:@"%no-eye%"]
-     withAttributedString:[NSAttributedString attributedStringWithAttachment:noEye]];
+           withAttributedString:[NSAttributedString attributedStringWithAttachment:noEye]];
     noKey.image = [UIImage imageNamed:@"no-key"];
     [s replaceCharactersInRange:[s.string rangeOfString:@"%no-key%"]
-     withAttributedString:[NSAttributedString attributedStringWithAttachment:noKey]];
+           withAttributedString:[NSAttributedString attributedStringWithAttachment:noKey]];
     
     [s replaceCharactersInRange:[s.string rangeOfString:@"WARNING"] withString:NSLocalizedString(@"WARNING", nil)];
     [s replaceCharactersInRange:[s.string rangeOfString:@"\nDO NOT let anyone see your recovery\n"
                                  "phrase or they can spend your bitcoins.\n"]
-     withString:NSLocalizedString(@"\nDO NOT let anyone see your recovery\n"
-                                  "phrase or they can spend your bitcoins.\n", nil)];
+                     withString:NSLocalizedString(@"\nDO NOT let anyone see your recovery\n"
+                                                  "phrase or they can spend your bitcoins.\n", nil)];
     [s replaceCharactersInRange:[s.string rangeOfString:@"\nNEVER type your recovery phrase into\n"
                                  "password managers or elsewhere.\nOther devices may be infected.\n"]
-     withString:NSLocalizedString(@"\nNEVER type your recovery phrase into\npassword managers or elsewhere.\n"
-                                  "Other devices may be infected.\n", nil)];
+                     withString:NSLocalizedString(@"\nNEVER type your recovery phrase into\npassword managers or elsewhere.\n"
+                                                  "Other devices may be infected.\n", nil)];
     self.warningLabel.attributedText = s;
     self.generateButton.superview.backgroundColor = [UIColor clearColor];
     
@@ -228,9 +228,9 @@
 - (IBAction)recover:(id)sender
 {
     [BREventManager saveEvent:@"welcome:recover_wallet"];
-
+    
     UIViewController *c = [self.storyboard instantiateViewControllerWithIdentifier:@"RecoverViewController"];
-
+    
     [self.navigationController pushViewController:c animated:YES];
 }
 
@@ -241,18 +241,18 @@
     if (! [BRWalletManager sharedInstance].passcodeEnabled) {
         [BREventManager saveEvent:@"welcome:passcode_disabled"];
         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"turn device passcode on", nil)
-          message:NSLocalizedString(@"\nA device passcode is needed to safeguard your wallet. Go to settings and turn "
-                                    "passcode on to continue.", nil)
-          delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", nil) otherButtonTitles:nil] show];
+                                    message:NSLocalizedString(@"\nA device passcode is needed to safeguard your wallet. Go to settings and turn "
+                                                              "passcode on to continue.", nil)
+                                   delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", nil) otherButtonTitles:nil] show];
         return;
     }
-
+    
     [self.navigationController.navigationBar.topItem setHidesBackButton:YES animated:YES];
     [sender setEnabled:NO];
     self.seedNav = [self.storyboard instantiateViewControllerWithIdentifier:@"SeedNav"];
     self.warningLabel.hidden = self.showButton.hidden = NO;
     self.warningLabel.alpha = self.showButton.alpha = 0.0;
-        
+    
     [UIView animateWithDuration:0.5 animations:^{
         self.warningLabel.alpha = self.showButton.alpha = 1.0;
         self.navigationController.navigationBar.topItem.titleView.alpha = 0.33*0.5;
@@ -290,30 +290,30 @@
 {
     UIView *v = transitionContext.containerView;
     UIViewController *to = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey],
-                     *from = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-
+    *from = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    
     to.view.center = CGPointMake(v.frame.size.width*(to == self ? -1 : 3)/2.0, to.view.center.y);
     [v addSubview:to.view];
     [v layoutIfNeeded];
-
-//    self.paralaxXLeft.constant = self.view.frame.size.width*(to == self ? 1 : 2)*PARALAX_RATIO;
+    
+    //    self.paralaxXLeft.constant = self.view.frame.size.width*(to == self ? 1 : 2)*PARALAX_RATIO;
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.0 usingSpringWithDamping:0.8
-    initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        to.view.center = from.view.center;
-        from.view.center = CGPointMake(v.frame.size.width*(to == self ? 3 : -1)/2.0, from.view.center.y);
-//        [self.navigationController.view layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        if (to == self) [from.view removeFromSuperview];
-        [transitionContext completeTransition:YES];
-    }];
+          initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+              to.view.center = from.view.center;
+              from.view.center = CGPointMake(v.frame.size.width*(to == self ? 3 : -1)/2.0, from.view.center.y);
+              //        [self.navigationController.view layoutIfNeeded];
+          } completion:^(BOOL finished) {
+              if (to == self) [from.view removeFromSuperview];
+              [transitionContext completeTransition:YES];
+          }];
 }
 
 // MARK: - UINavigationControllerDelegate
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
-animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC
-toViewController:(UIViewController *)toVC
+                                  animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC
+                                                 toViewController:(UIViewController *)toVC
 {
     return self;
 }
@@ -323,7 +323,7 @@ toViewController:(UIViewController *)toVC
 // MARK: - UIViewControllerTransitioningDelegate
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
-presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+                                                                  presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
 {
     return self;
 }

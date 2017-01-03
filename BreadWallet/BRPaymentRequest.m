@@ -80,7 +80,7 @@
     NSURL *url = [NSURL URLWithString:s];
     
     if (! url || ! url.scheme) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"bitcoin://%@", s]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"vertcoin://%@", s]];
     }
     else if (! url.host && url.resourceSpecifier) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", url.scheme, url.resourceSpecifier]];
@@ -88,7 +88,7 @@
     
     self.scheme = url.scheme;
     
-    if ([url.scheme isEqual:@"bitcoin"]) {
+    if ([url.scheme isEqual:@"vertcoin"]) {
         self.paymentAddress = url.host;
     
         //TODO: correctly handle unknown but required url arguments (by reporting the request invalid)
@@ -123,9 +123,9 @@
 
 - (NSString *)string
 {
-    if (! [self.scheme isEqual:@"bitcoin"]) return self.r;
+    if (! [self.scheme isEqual:@"vertcoin"]) return self.r;
 
-    NSMutableString *s = [NSMutableString stringWithString:@"bitcoin:"];
+    NSMutableString *s = [NSMutableString stringWithString:@"vertcoin:"];
     NSMutableArray *q = [NSMutableArray array];
     NSMutableCharacterSet *charset = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
     
@@ -218,7 +218,7 @@ completion:(void (^)(BRPaymentProtocolRequest *req, NSError *error))completion
     NSMutableURLRequest *req = (u) ? [NSMutableURLRequest requestWithURL:u
                                       cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:timeout] : nil;
 
-    [req setValue:@"application/bitcoin-paymentrequest" forHTTPHeaderField:@"Accept"];
+    [req setValue:@"application/vertcoin-paymentrequest" forHTTPHeaderField:@"Accept"];
 //  [req addValue:@"text/uri-list" forHTTPHeaderField:@"Accept"]; // breaks some BIP72 implementations, notably bitpay's
 
     if (! req) {
@@ -241,7 +241,7 @@ completion:(void (^)(BRPaymentProtocolRequest *req, NSError *error))completion
         network = @"test";
 #endif
         
-        if ([response.MIMEType.lowercaseString isEqual:@"application/bitcoin-paymentrequest"] && data.length <= 50000) {
+        if ([response.MIMEType.lowercaseString isEqual:@"application/vertcoin-paymentrequest"] && data.length <= 50000) {
             request = [BRPaymentProtocolRequest requestWithData:data];
         }
         else if ([response.MIMEType.lowercaseString isEqual:@"text/uri-list"] && data.length <= 50000) {
@@ -285,8 +285,8 @@ completion:(void (^)(BRPaymentProtocolACK *ack, NSError *error))completion
         return;
     }
 
-    [req setValue:@"application/bitcoin-payment" forHTTPHeaderField:@"Content-Type"];
-    [req addValue:@"application/bitcoin-paymentack" forHTTPHeaderField:@"Accept"];
+    [req setValue:@"application/vertcoin-payment" forHTTPHeaderField:@"Content-Type"];
+    [req addValue:@"application/vertcoin-paymentack" forHTTPHeaderField:@"Accept"];
     req.HTTPMethod = @"POST";
     req.HTTPBody = payment.data;
 
@@ -299,7 +299,7 @@ completion:(void (^)(BRPaymentProtocolACK *ack, NSError *error))completion
         
         BRPaymentProtocolACK *ack = nil;
         
-        if ([response.MIMEType.lowercaseString isEqual:@"application/bitcoin-paymentack"] && data.length <= 50000) {
+        if ([response.MIMEType.lowercaseString isEqual:@"application/vertcoin-paymentack"] && data.length <= 50000) {
             ack = [BRPaymentProtocolACK ackWithData:data];
         }
 

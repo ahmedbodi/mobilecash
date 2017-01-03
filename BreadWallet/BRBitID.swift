@@ -37,7 +37,7 @@ import Security
         return url.scheme == SCHEME
     }
     
-    open static let BITCOIN_SIGNED_MESSAGE_HEADER = "Bitcoin Signed Message:\n".data(using: String.Encoding.utf8)!
+    open static let BITCOIN_SIGNED_MESSAGE_HEADER = "Vertcoin Signed Message:\n".data(using: String.Encoding.utf8)!
     
     open class func formatMessageForBitcoinSigning(_ message: String) -> Data {
         let data = NSMutableData()

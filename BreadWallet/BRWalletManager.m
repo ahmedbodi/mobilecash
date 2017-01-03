@@ -50,7 +50,7 @@
 #define TICKER_FAILOVER_URL  @"https://bitpay.com/rates"
 
 #define SEED_ENTROPY_LENGTH   (128/8)
-#define SEC_ATTR_SERVICE      @"org.ahmedbodi.vertwallet"
+#define SEC_ATTR_SERVICE      @"com.ahmedbodiwala.vertlet"
 #define DEFAULT_CURRENCY_CODE @"USD"
 #define DEFAULT_SPENT_LIMIT   SATOSHIS
 
