@@ -5,37 +5,37 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>vertlet</string>
+	<string>cashlet</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleTypeIconFiles</key>
 			<array/>
 			<key>CFBundleTypeName</key>
-			<string>Vertcoin Payment Request</string>
+			<string>Mobilecash Payment Request</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>vertcoin.paymentrequest</string>
+				<string>mobilecash.paymentrequest</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFiles</key>
 			<array/>
 			<key>CFBundleTypeName</key>
-			<string>Vertcoin Payment</string>
+			<string>Mobilecash Payment</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>vertcoin.payment</string>
+				<string>mobilecash.payment</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFiles</key>
 			<array/>
 			<key>CFBundleTypeName</key>
-			<string>Vertcoin Payment ACK</string>
+			<string>Mobilecash Payment ACK</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>vertcoin.paymentack</string>
+				<string>mobilecash.paymentack</string>
 			</array>
 		</dict>
 	</array>
@@ -59,10 +59,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>vertcoin</string>
+			<string>mobilecash</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>vertcoin</string>
+				<string>mobilecash</string>
 			</array>
 		</dict>
 		<dict>
@@ -134,13 +134,13 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Vertcoin Payment Request</string>
+			<string>Mobilecash Payment Request</string>
 			<key>UTTypeIdentifier</key>
-			<string>vertcoin.paymentrequest</string>
+			<string>mobilecash.paymentrequest</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.mime-type</key>
-				<string>application/vertcoin-paymentrequest</string>
+				<string>application/mobilecash-paymentrequest</string>
 			</dict>
 		</dict>
 		<dict>
@@ -149,13 +149,13 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Vertcoin Payment</string>
+			<string>Mobilecash Payment</string>
 			<key>UTTypeIdentifier</key>
-			<string>vertcoin.payment</string>
+			<string>mobilecash.payment</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.mime-type</key>
-				<string>application/vertcoin-payment</string>
+				<string>application/mobilecash-payment</string>
 			</dict>
 		</dict>
 		<dict>
@@ -164,13 +164,13 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Vertcoin Payment ACK</string>
+			<string>Mobilecash Payment ACK</string>
 			<key>UTTypeIdentifier</key>
-			<string>vertcoin.paymentack</string>
+			<string>mobilecash.paymentack</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.mime-type</key>
-				<string>application/vertcoin-paymentack</string>
+				<string>application/mobilecash-paymentack</string>
 			</dict>
 		</dict>
 	</array>

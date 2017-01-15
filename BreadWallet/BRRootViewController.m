@@ -41,9 +41,9 @@
 #import <sys/stat.h>
 #import <mach-o/dyld.h>
 
-#define BALANCE_TIP NSLocalizedString(@"This is your vertcoin balance. Vertcoin is a currency. "\
+#define BALANCE_TIP NSLocalizedString(@"This is your mobilecash balance. Mobilecash is a currency. "\
                                        "The exchange rate changes with the market.", nil)
-#define BITS_TIP    NSLocalizedString(@"%@ is for 'verts'. %@ = 1 vertcoin.", nil)
+#define BITS_TIP    NSLocalizedString(@"%@ is for 'mobilecashbits'. %@ = 1 mobilecash.", nil)
 
 #define BACKUP_DIALOG_TIME_KEY @"BACKUP_DIALOG_TIME"
 #define BALANCE_KEY            @"BALANCE"
@@ -191,7 +191,7 @@
                 [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WARNING", nil)
                   message:NSLocalizedString(@"DEVICE SECURITY COMPROMISED\n"
                                             "Any 'jailbreak' app can access any other app's keychain data "
-                                            "(and steal your vertcoins). "
+                                            "(and steal your mobilecash). "
                                             "Wipe this wallet immediately and restore on a secure device.", nil)
                  delegate:self cancelButtonTitle:NSLocalizedString(@"ignore", nil)
                  otherButtonTitles:NSLocalizedString(@"wipe", nil), nil] show];
@@ -200,7 +200,7 @@
                 [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WARNING", nil)
                   message:NSLocalizedString(@"DEVICE SECURITY COMPROMISED\n"
                                             "Any 'jailbreak' app can access any other app's keychain data "
-                                            "(and steal your vertcoins).", nil)
+                                            "(and steal your mobilecash).", nil)
                   delegate:self cancelButtonTitle:NSLocalizedString(@"ignore", nil)
                   otherButtonTitles:NSLocalizedString(@"close app", nil), nil] show];
             }
@@ -364,7 +364,7 @@
         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WARNING", nil)
           message:NSLocalizedString(@"DEVICE SECURITY COMPROMISED\n"
                                     "Any 'jailbreak' app can access any other app's keychain data "
-                                    "(and steal your vertcoins). "
+                                    "(and steal your mobilecash). "
                                     "Wipe this wallet immediately and restore on a secure device.", nil)
           delegate:self cancelButtonTitle:NSLocalizedString(@"ignore", nil)
           otherButtonTitles:NSLocalizedString(@"wipe", nil), nil] show];
@@ -373,7 +373,7 @@
         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WARNING", nil)
           message:NSLocalizedString(@"DEVICE SECURITY COMPROMISED\n"
                                     "Any 'jailbreak' app can access any other app's keychain data "
-                                    "(and steal your vertcoins).", nil)
+                                    "(and steal your mobilecash).", nil)
           delegate:self cancelButtonTitle:NSLocalizedString(@"ignore", nil)
           otherButtonTitles:NSLocalizedString(@"close app", nil), nil] show];
     }
@@ -517,7 +517,7 @@
         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WARNING", nil)
           message:[NSString stringWithFormat:@"\n%@\n\n%@\n\n%@\n",
                    [NSLocalizedString(@"\nDO NOT let anyone see your recovery\n"
-                                      "phrase or they can spend your vertcoins.\n", nil)
+                                      "phrase or they can spend your mobilecash.\n", nil)
                     stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]],
                    [NSLocalizedString(@"\nNEVER type your recovery phrase into\n"
                                       "password managers or elsewhere.\n"
@@ -759,7 +759,7 @@
     [defs setDouble:now forKey:BACKUP_DIALOG_TIME_KEY];
     
     [[[UIAlertView alloc]
-      initWithTitle:(first) ? NSLocalizedString(@"you received vertcoin!", nil) : NSLocalizedString(@"IMPORTANT", nil)
+      initWithTitle:(first) ? NSLocalizedString(@"you received mobilecash!", nil) : NSLocalizedString(@"IMPORTANT", nil)
       message:[NSString stringWithFormat:NSLocalizedString(@"\n%@\n\nif you ever lose your phone, you will need it to "
                                                            "recover your wallet", nil),
                (first) ? NSLocalizedString(@"next, write down your recovery phrase", nil) :

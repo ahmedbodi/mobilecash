@@ -73,7 +73,7 @@
         
         block = [[BRMerkleBlock alloc] initWithBlockHash:hash version:self.version prevBlock:prev merkleRoot:root
                  timestamp:self.timestamp + NSTimeIntervalSince1970 target:self.target nonce:self.nonce
-                 totalTransactions:self.totalTransactions hashes:self.hashes flags:self.flags height:self.height];
+                                       totalTransactions:self.totalTransactions hashes:self.hashes flags:self.flags height:self.height parentBlock:nil];
     }];
     
     return block;

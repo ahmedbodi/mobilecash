@@ -28,7 +28,7 @@
 #if BITCOIN_TESTNET
 #define BITCOIN_MAGIC_NUMBER 0x0709110bu
 #else
-#define BITCOIN_MAGIC_NUMBER 0xdab5bffau
+#define BITCOIN_MAGIC_NUMBER 0xd8b5bdfa // { 0xfa, 0xbd, 0xb5, 0xd8 }
 #endif
 
 CF_IMPLICIT_BRIDGING_ENABLED

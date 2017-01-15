@@ -28,8 +28,8 @@
 #import "BRWallet.h"
 #import "BRMnemonic.h"
 
-#define BTC         @"\xE1\x97\x90"             // capital V with a stroke through middle (utf-8)
-#define BITS        @"\x6D\xE1\x97\x90"   // mV (utf-8)
+#define BTC         @"\xE1\x97\xB0"       // capital V with a stroke through middle (utf-8)
+#define BITS        @"\x6D\xE1\x97\xB0"   // mV (utf-8)
 #define NARROW_NBSP  @"\xE2\x80\xAF" // narrow no-break space (utf-8)
 #define LDQUOTE      @"\xE2\x80\x9C" // left double quote (utf-8)
 #define RDQUOTE      @"\xE2\x80\x9D" // right double quote (utf-8)

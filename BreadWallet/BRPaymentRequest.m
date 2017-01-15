@@ -72,15 +72,15 @@
     self.message = nil;
     self.amount = 0;
     self.r = nil;
-
+    
     if (string.length == 0) return;
-
+    
     NSString *s = [[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
                    stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     NSURL *url = [NSURL URLWithString:s];
     
     if (! url || ! url.scheme) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"vertcoin://%@", s]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"mobilecash://%@", s]];
     }
     else if (! url.host && url.resourceSpecifier) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", url.scheme, url.resourceSpecifier]];
@@ -88,22 +88,22 @@
     
     self.scheme = url.scheme;
     
-    if ([url.scheme isEqual:@"vertcoin"]) {
+    if ([url.scheme isEqual:@"mobilecash"]) {
         self.paymentAddress = url.host;
-    
+        
         //TODO: correctly handle unknown but required url arguments (by reporting the request invalid)
         for (NSString *arg in [url.query componentsSeparatedByString:@"&"]) {
             NSArray *pair = [arg componentsSeparatedByString:@"="]; // if more than one '=', then pair[1] != value
-
+            
             if (pair.count < 2) continue;
-        
+            
             NSString *value = [[[arg substringFromIndex:[pair[0] length] + 1]
                                 stringByReplacingOccurrencesOfString:@"+" withString:@" "]
                                stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
+            
             if ([pair[0] isEqual:@"amount"]) {
                 NSDecimal dec, amount;
-
+                
                 if ([[NSScanner scannerWithString:value] scanDecimal:&dec]) {
                     NSDecimalMultiplyByPowerOf10(&amount, &dec, 8, NSRoundUp);
                     self.amount = [NSDecimalNumber decimalNumberWithDecimal:amount].unsignedLongLongValue;
@@ -123,9 +123,9 @@
 
 - (NSString *)string
 {
-    if (! [self.scheme isEqual:@"vertcoin"]) return self.r;
-
-    NSMutableString *s = [NSMutableString stringWithString:@"vertcoin:"];
+    if (! [self.scheme isEqual:@"mobilecash"]) return self.r;
+    
+    NSMutableString *s = [NSMutableString stringWithString:@"mobilecash:"];
     NSMutableArray *q = [NSMutableArray array];
     NSMutableCharacterSet *charset = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
     
@@ -136,20 +136,20 @@
         [q addObject:[@"amount=" stringByAppendingString:[(id)[NSDecimalNumber numberWithUnsignedLongLong:self.amount]
                                                           decimalNumberByMultiplyingByPowerOf10:-8].stringValue]];
     }
-
+    
     if (self.label.length > 0) {
         [q addObject:[@"label=" stringByAppendingString:[self.label
-         stringByAddingPercentEncodingWithAllowedCharacters:charset]]];
+                                                         stringByAddingPercentEncodingWithAllowedCharacters:charset]]];
     }
     
     if (self.message.length > 0) {
         [q addObject:[@"message=" stringByAppendingString:[self.message
-         stringByAddingPercentEncodingWithAllowedCharacters:charset]]];
+                                                           stringByAddingPercentEncodingWithAllowedCharacters:charset]]];
     }
-
+    
     if (self.r.length > 0) {
         [q addObject:[@"r=" stringByAppendingString:[self.r
-         stringByAddingPercentEncodingWithAllowedCharacters:charset]]];
+                                                     stringByAddingPercentEncodingWithAllowedCharacters:charset]]];
     }
     
     if (q.count > 0) {
@@ -199,121 +199,121 @@
     if (script.length == 0) return nil;
     
     BRPaymentProtocolDetails *details =
-        [[BRPaymentProtocolDetails alloc] initWithNetwork:network outputAmounts:@[@(self.amount)]
-         outputScripts:@[script] time:0 expires:0 memo:self.message paymentURL:nil merchantData:nil];
+    [[BRPaymentProtocolDetails alloc] initWithNetwork:network outputAmounts:@[@(self.amount)]
+                                        outputScripts:@[script] time:0 expires:0 memo:self.message paymentURL:nil merchantData:nil];
     BRPaymentProtocolRequest *request =
-        [[BRPaymentProtocolRequest alloc] initWithVersion:1 pkiType:@"none" certs:(name ? @[name] : nil) details:details
-         signature:nil];
+    [[BRPaymentProtocolRequest alloc] initWithVersion:1 pkiType:@"none" certs:(name ? @[name] : nil) details:details
+                                            signature:nil];
     
     return request;
 }
 
 // fetches the request over HTTP and calls completion block
 + (void)fetch:(NSString *)url timeout:(NSTimeInterval)timeout
-completion:(void (^)(BRPaymentProtocolRequest *req, NSError *error))completion
+   completion:(void (^)(BRPaymentProtocolRequest *req, NSError *error))completion
 {
     if (! completion) return;
-
+    
     NSURL *u = [NSURL URLWithString:url];
     NSMutableURLRequest *req = (u) ? [NSMutableURLRequest requestWithURL:u
-                                      cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:timeout] : nil;
-
-    [req setValue:@"application/vertcoin-paymentrequest" forHTTPHeaderField:@"Accept"];
-//  [req addValue:@"text/uri-list" forHTTPHeaderField:@"Accept"]; // breaks some BIP72 implementations, notably bitpay's
-
+                                                             cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:timeout] : nil;
+    
+    [req setValue:@"application/mobilecash-paymentrequest" forHTTPHeaderField:@"Accept"];
+    //  [req addValue:@"text/uri-list" forHTTPHeaderField:@"Accept"]; // breaks some BIP72 implementations, notably bitpay's
+    
     if (! req) {
         completion(nil, [NSError errorWithDomain:@"BreadWallet" code:417
-                         userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"bad payment request URL", nil)}]);
+                                        userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"bad payment request URL", nil)}]);
         return;
     }
-
-    [[[NSURLSession sharedSession] dataTaskWithRequest:req
-    completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            completion(nil, error);
-            return;
-        }
     
-        BRPaymentProtocolRequest *request = nil;
-        NSString *network = @"main";
-        
+    [[[NSURLSession sharedSession] dataTaskWithRequest:req
+                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                         if (error) {
+                                             completion(nil, error);
+                                             return;
+                                         }
+                                         
+                                         BRPaymentProtocolRequest *request = nil;
+                                         NSString *network = @"main";
+                                         
 #if BITCOIN_TESTNET
-        network = @"test";
+                                         network = @"test";
 #endif
-        
-        if ([response.MIMEType.lowercaseString isEqual:@"application/vertcoin-paymentrequest"] && data.length <= 50000) {
-            request = [BRPaymentProtocolRequest requestWithData:data];
-        }
-        else if ([response.MIMEType.lowercaseString isEqual:@"text/uri-list"] && data.length <= 50000) {
-            for (NSString *url in [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]
-                                   componentsSeparatedByString:@"\n"]) {
-                if ([url hasPrefix:@"#"]) continue; // skip comments
-                request = [BRPaymentRequest requestWithString:url].protocolRequest; // use first url and ignore the rest
-                break;
-            }
-        }
-        
-        if (! request) {
-            NSLog(@"unexpected response from %@:\n%@", req.URL.host,
-                  [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-            completion(nil, [NSError errorWithDomain:@"BreadWallet" code:417 userInfo:@{NSLocalizedDescriptionKey:
-                             [NSString stringWithFormat:NSLocalizedString(@"unexpected response from %@", nil),
-                              req.URL.host]}]);
-        }
-        else if (! [request.details.network isEqual:network]) {
-            completion(nil, [NSError errorWithDomain:@"BreadWallet" code:417 userInfo:@{NSLocalizedDescriptionKey:
-                             [NSString stringWithFormat:NSLocalizedString(@"requested network \"%@\" instead of \"%@\"",
-                                                                          nil), request.details.network, network]}]);
-        }
-        else completion(request, nil);
-    }] resume];
+                                         
+                                         if ([response.MIMEType.lowercaseString isEqual:@"application/mobilecash-paymentrequest"] && data.length <= 50000) {
+                                             request = [BRPaymentProtocolRequest requestWithData:data];
+                                         }
+                                         else if ([response.MIMEType.lowercaseString isEqual:@"text/uri-list"] && data.length <= 50000) {
+                                             for (NSString *url in [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]
+                                                                    componentsSeparatedByString:@"\n"]) {
+                                                 if ([url hasPrefix:@"#"]) continue; // skip comments
+                                                 request = [BRPaymentRequest requestWithString:url].protocolRequest; // use first url and ignore the rest
+                                                 break;
+                                             }
+                                         }
+                                         
+                                         if (! request) {
+                                             NSLog(@"unexpected response from %@:\n%@", req.URL.host,
+                                                   [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                                             completion(nil, [NSError errorWithDomain:@"BreadWallet" code:417 userInfo:@{NSLocalizedDescriptionKey:
+                                                                                                                             [NSString stringWithFormat:NSLocalizedString(@"unexpected response from %@", nil),
+                                                                                                                              req.URL.host]}]);
+                                         }
+                                         else if (! [request.details.network isEqual:network]) {
+                                             completion(nil, [NSError errorWithDomain:@"BreadWallet" code:417 userInfo:@{NSLocalizedDescriptionKey:
+                                                                                                                             [NSString stringWithFormat:NSLocalizedString(@"requested network \"%@\" instead of \"%@\"",
+                                                                                                                                                                          nil), request.details.network, network]}]);
+                                         }
+                                         else completion(request, nil);
+                                     }] resume];
 }
 
 + (void)postPayment:(BRPaymentProtocolPayment *)payment to:(NSString *)paymentURL timeout:(NSTimeInterval)timeout
-completion:(void (^)(BRPaymentProtocolACK *ack, NSError *error))completion
+         completion:(void (^)(BRPaymentProtocolACK *ack, NSError *error))completion
 {
     NSURL *u = [NSURL URLWithString:paymentURL];
     NSMutableURLRequest *req = (u) ? [NSMutableURLRequest requestWithURL:u
-                                      cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:timeout] : nil;
+                                                             cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:timeout] : nil;
     
     if (! req) {
         if (completion) {
             completion(nil, [NSError errorWithDomain:@"BreadWallet" code:417
-                             userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"bad payment URL", nil)}]);
+                                            userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"bad payment URL", nil)}]);
         }
         
         return;
     }
-
-    [req setValue:@"application/vertcoin-payment" forHTTPHeaderField:@"Content-Type"];
-    [req addValue:@"application/vertcoin-paymentack" forHTTPHeaderField:@"Accept"];
+    
+    [req setValue:@"application/mobilecash-payment" forHTTPHeaderField:@"Content-Type"];
+    [req addValue:@"application/mobilecash-paymentack" forHTTPHeaderField:@"Accept"];
     req.HTTPMethod = @"POST";
     req.HTTPBody = payment.data;
-
+    
     [[[NSURLSession sharedSession] dataTaskWithRequest:req
-    completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            if (completion) completion(nil, error);
-            return;
-        }
-        
-        BRPaymentProtocolACK *ack = nil;
-        
-        if ([response.MIMEType.lowercaseString isEqual:@"application/vertcoin-paymentack"] && data.length <= 50000) {
-            ack = [BRPaymentProtocolACK ackWithData:data];
-        }
-
-        if (! ack) {
-            NSLog(@"unexpected response from %@:\n%@", req.URL.host,
-                  [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-            if (completion) {
-                completion(nil, [NSError errorWithDomain:@"BreadWallet" code:417 userInfo:@{NSLocalizedDescriptionKey:
-                                 [NSString stringWithFormat:NSLocalizedString(@"unexpected response from %@", nil),
-                                  req.URL.host]}]);
-            }
-        }
-        else if (completion) completion(ack, nil);
-     }] resume];
+                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                         if (error) {
+                                             if (completion) completion(nil, error);
+                                             return;
+                                         }
+                                         
+                                         BRPaymentProtocolACK *ack = nil;
+                                         
+                                         if ([response.MIMEType.lowercaseString isEqual:@"application/mobilecash-paymentack"] && data.length <= 50000) {
+                                             ack = [BRPaymentProtocolACK ackWithData:data];
+                                         }
+                                         
+                                         if (! ack) {
+                                             NSLog(@"unexpected response from %@:\n%@", req.URL.host,
+                                                   [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                                             if (completion) {
+                                                 completion(nil, [NSError errorWithDomain:@"BreadWallet" code:417 userInfo:@{NSLocalizedDescriptionKey:
+                                                                                                                                 [NSString stringWithFormat:NSLocalizedString(@"unexpected response from %@", nil),
+                                                                                                                                  req.URL.host]}]);
+                                             }
+                                         }
+                                         else if (completion) completion(ack, nil);
+                                     }] resume];
 }
 
 @end

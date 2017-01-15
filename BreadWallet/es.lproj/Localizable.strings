@@ -1,5 +1,5 @@
 /* No comment provided by engineer. */
-"%@ is for 'verts'. %@ = 1 vertcoin." = "%1$@ es para 'verts'. %2$@ = 1 vertcoin.";
+"%@ is for 'verts'. %@ = 1 mobilecash." = "%1$@ es para 'verts'. %2$@ = 1 mobilecash.";
 
 /* No comment provided by engineer. */
 "%@ is not allowed to access the camera" = "%@ no está permitido accesar a la cámara";
@@ -38,13 +38,13 @@
 "\nA device passcode is needed to safeguard your wallet. Go to settings and turn passcode on to continue." = "\nNecesitas un Código de acceso para proteger tu cartera. Ve a configuración y activa el Código de acceso para continuar.";
 
 /* No comment provided by engineer. */
-"\nADDRESS ALREADY USED\n\nvertcoin addresses are intended for single use only\n\nre-use reduces privacy for both you and the recipient and can result in loss if the recipient doesn't directly control the address" = "\nDIRECCIÓN EN USO\n\nlas direcciones vertcoin sirven para un solo uso\n\nla reutilización de direcciones reduce tu privacidad y la del destinatario, y puede ocasionar pérdidas si este no controla directamente la dirección";
+"\nADDRESS ALREADY USED\n\nmobilecash addresses are intended for single use only\n\nre-use reduces privacy for both you and the recipient and can result in loss if the recipient doesn't directly control the address" = "\nDIRECCIÓN EN USO\n\nlas direcciones mobilecash sirven para un solo uso\n\nla reutilización de direcciones reduce tu privacidad y la del destinatario, y puede ocasionar pérdidas si este no controla directamente la dirección";
 
 /* No comment provided by engineer. */
 "\nallow camera access in\nSettings->Privacy->Camera->%@" = "\npermitir el acceso a la cámara en\nConfiguración->Privacidad->Cámara->%@";
 
 /* No comment provided by engineer. */
-"\nDO NOT let anyone see your recovery\nphrase or they can spend your vertcoins.\n" = "\nNO permitas que nadie vea tu frase de\nrecuperación, podrían usar tus vertcoin.\n";
+"\nDO NOT let anyone see your recovery\nphrase or they can spend your mobilecashs.\n" = "\nNO permitas que nadie vea tu frase de\nrecuperación, podrían usar tus mobilecash.\n";
 
 /* No comment provided by engineer. */
 "\nDO NOT take a screenshot.\nScreenshots are visible to other apps\nand devices.\n" = "\nNO tomes una captura de pantalla.\nLas capturas son visibles para otras aplicaciones\ny dispositivos.\n";
@@ -86,22 +86,22 @@
 "bad signature" = "firma incorrecta";
 
 /* No comment provided by engineer. */
-"Vertcoin address" = "Dirección de vertcoin";
+"Mobilecash address" = "Dirección de mobilecash";
 
 /* No comment provided by engineer. */
-"Vertcoin addresses can also be copied to the clipboard. A vertcoin address always starts with '1' or '3'." = "Las direcciones de vertcoin también pueden copiarse en el portapapeles. Una dirección de vertcoin siempre comienza por \"1\" o \"3\".";
+"Mobilecash addresses can also be copied to the clipboard. A mobilecash address always starts with '1' or '3'." = "Las direcciones de mobilecash también pueden copiarse en el portapapeles. Una dirección de mobilecash siempre comienza por \"1\" o \"3\".";
 
 /* No comment provided by engineer. */
-"vertcoin network fee" = "cuota de red de vertcoin";
+"mobilecash network fee" = "cuota de red de mobilecash";
 
 /* No comment provided by engineer. */
-"vertcoin payments can't be less than %@" = "los pagos en vertcoin no pueden ser inferiores a %@";
+"mobilecash payments can't be less than %@" = "los pagos en mobilecash no pueden ser inferiores a %@";
 
 /* No comment provided by engineer. */
-"vertcoin transaction not signed" = "transacción de vertcoin no firmada";
+"mobilecash transaction not signed" = "transacción de mobilecash no firmada";
 
 /* No comment provided by engineer. */
-"vertcoin transaction outputs can't be less than %@" = "los resultados de la transacción de vertcoin no pueden ser inferiores a %@";
+"mobilecash transaction outputs can't be less than %@" = "los resultados de la transacción de mobilecash no pueden ser inferiores a %@";
 
 /* No comment provided by engineer. */
 "block #%d of %d" = "bloque #%1$d de %2$d";
@@ -128,7 +128,7 @@
 "choose passcode for %@" = "seleccionar código de acceso para %@";
 
 /* No comment provided by engineer. */
-"clipboard doesn't contain a valid vertcoin address" = "el portapapeles no contiene ninguna dirección vertcoin válida";
+"clipboard doesn't contain a valid mobilecash address" = "el portapapeles no contiene ninguna dirección mobilecash válida";
 
 /* No comment provided by engineer. */
 "close app" = "cerrar app";
@@ -167,13 +167,13 @@
 "couldn't sweep balance" = "no se pudo barrer el saldo";
 
 /* No comment provided by engineer. */
-"couldn't transmit payment to vertcoin network" = "no se pudo transmitir el pago a la red vertcoin";
+"couldn't transmit payment to mobilecash network" = "no se pudo transmitir el pago a la red mobilecash";
 
 /* No comment provided by engineer. */
-"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can access any other app's keychain data (and steal your vertcoins)." = "DISPOSITIVO DE SEGURIDAD DUDOSA\nCualquier aplicación de 'jailbreak' puede acceder a la cadena de datos de otras aplicaciones (y robar tus vertcoin).";
+"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can access any other app's keychain data (and steal your mobilecashs)." = "DISPOSITIVO DE SEGURIDAD DUDOSA\nCualquier aplicación de 'jailbreak' puede acceder a la cadena de datos de otras aplicaciones (y robar tus mobilecash).";
 
 /* No comment provided by engineer. */
-"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can access any other app's keychain data (and steal your vertcoins). Wipe this wallet immediately and restore on a secure device." = "DISPOSITIVO DE SEGURIDAD DUDOSA\nCualquier aplicación de 'jailbreak' puede acceder a la cadena de datos de otras aplicaciones (y robar tus vertcoin). Borra inmediatamente esta cartera para restablecerla en un dispositivo seguro.";
+"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can access any other app's keychain data (and steal your mobilecashs). Wipe this wallet immediately and restore on a secure device." = "DISPOSITIVO DE SEGURIDAD DUDOSA\nCualquier aplicación de 'jailbreak' puede acceder a la cadena de datos de otras aplicaciones (y robar tus mobilecash). Borra inmediatamente esta cartera para restablecerla en un dispositivo seguro.";
 
 /* No comment provided by engineer. */
 "do it later" = "hazlo más tarde";
@@ -191,7 +191,7 @@
 "enter old passcode" = "introduce el Código de acceso antiguo";
 
 /* No comment provided by engineer. */
-"error signing vertcoin transaction" = "error en la firma de transacción de vertcoin";
+"error signing mobilecash transaction" = "error en la firma de transacción de mobilecash";
 
 /* No comment provided by engineer. */
 "error signing transaction" = "error en la firma de transacción";
@@ -221,13 +221,13 @@
 "insufficient funds" = "saldo insuficiente";
 
 /* No comment provided by engineer. */
-"insufficient funds for vertcoin network fee" = "fondos insuficientes para la cuota de red vertcoin";
+"insufficient funds for mobilecash network fee" = "fondos insuficientes para la cuota de red mobilecash";
 
 /* No comment provided by engineer. */
 "INVALID" = "NO VÁLIDO";
 
 /* No comment provided by engineer. */
-"Let others scan this QR code to get your vertcoin address. Anyone can send vertcoins to your wallet by transferring them to your address." = "Permite a otros escanear este código QR para obtener tu dirección vertcoin. Cualquiera puede enviar vertcoin a tu cartera transfiriéndolos a tu dirección.";
+"Let others scan this QR code to get your mobilecash address. Anyone can send mobilecashs to your wallet by transferring them to your address." = "Permite a otros escanear este código QR para obtener tu dirección mobilecash. Cualquiera puede enviar mobilecash a tu cartera transfiriéndolos a tu dirección.";
 
 /* No comment provided by engineer. */
 "minute" = "minuto";
@@ -254,16 +254,16 @@
 "no peers found" = "no se encontraron pares";
 
 /* No comment provided by engineer. */
-"not a vertcoin QR code" = "no es un código QR de vertcoin";
+"not a mobilecash QR code" = "no es un código QR de mobilecash";
 
 /* No comment provided by engineer. */
-"not a valid vertcoin address" = "no es una dirección válida de vertcoin";
+"not a valid mobilecash address" = "no es una dirección válida de mobilecash";
 
 /* No comment provided by engineer. */
 "not a valid private key" = "no es una clave privada válida";
 
 /* No comment provided by engineer. */
-"not connected to the vertcoin network" = "no conectado a la red vertcoin";
+"not connected to the mobilecash network" = "no conectado a la red mobilecash";
 
 /* No comment provided by engineer. */
 "ok" = "de acuerdo";
@@ -296,7 +296,7 @@
 "post-dated" = "postdatado";
 
 /* No comment provided by engineer. */
-"Receive vertcoins at this address: %@" = "Recibe vertcoins en esta dirección: %@";
+"Receive mobilecashs at this address: %@" = "Recibe mobilecashs en esta dirección: %@";
 
 /* No comment provided by engineer. */
 "received" = "recibido";
@@ -341,7 +341,7 @@
 "reset" = "reiniciar";
 
 /* No comment provided by engineer. */
-"Scan someone else's QR code to get their vertcoin address. You can send a payment to anyone with an address." = "Escanee el código QR de terceros para obtener su dirección vertcoin. Puede enviar un pago a cualquier poseedor de una dirección.";
+"Scan someone else's QR code to get their mobilecash address. You can send a payment to anyone with an address." = "Escanee el código QR de terceros para obtener su dirección mobilecash. Puede enviar un pago a cualquier poseedor de una dirección.";
 
 /* No comment provided by engineer. */
 "Screenshots are visible to other apps and devices. Generate a new recovery phrase and keep it secret." = "Las capturas de pantalla son visibles para otras aplicaciones y dispositivos. Genere una nueva frase de recuperación y téngala en secreto.";
@@ -353,7 +353,7 @@
 "seen by %d of %d peers" = "visto por %1$d de %2$d pares";
 
 /* No comment provided by engineer. */
-"Send %@ (%@) from this private key into your wallet? The vertcoin network will receive a fee of %@ (%@)." = "¿Enviar %1$@ (%2$@) de esta clave privada a su cartera? La red vertcoin deducirá una tasa de %3$@ (%4$@).";
+"Send %@ (%@) from this private key into your wallet? The mobilecash network will receive a fee of %@ (%@)." = "¿Enviar %1$@ (%2$@) de esta clave privada a su cartera? La red mobilecash deducirá una tasa de %3$@ (%4$@).";
 
 /* No comment provided by engineer. */
 "send address as email" = "enviar dirección como correo electrónico";
@@ -404,10 +404,10 @@
 "the app will now close" = "la aplicación se cerrará ahora";
 
 /* No comment provided by engineer. */
-"This is your vertcoin address. Tap to copy it or send it by email or sms. The address will change each time you receive funds, but old addresses always work." = "Esta es su dirección vertcoin. Pulse para copiarla o enviarla por correo electrónico o sms. La dirección cambiará cada vez que reciba fondos, si bien las direcciones antiguas funcionarán siempre.";
+"This is your mobilecash address. Tap to copy it or send it by email or sms. The address will change each time you receive funds, but old addresses always work." = "Esta es su dirección mobilecash. Pulse para copiarla o enviarla por correo electrónico o sms. La dirección cambiará cada vez que reciba fondos, si bien las direcciones antiguas funcionarán siempre.";
 
 /* No comment provided by engineer. */
-"This is your vertcoin balance. Vertcoin is a currency. The exchange rate changes with the market." = "Este es su saldo vertcoin. Vertcoin es una moneda. La tasa de cambio fluctúa con el mercado.";
+"This is your mobilecash balance. Mobilecash is a currency. The exchange rate changes with the market." = "Este es su saldo mobilecash. Mobilecash es una moneda. La tasa de cambio fluctúa con el mercado.";
 
 /* No comment provided by engineer. */
 "this payment address is already in your wallet" = "esta dirección de pago ya está en su cartera";
@@ -494,7 +494,7 @@
 "WRITE DOWN YOUR RECOVERY PHRASE" = "ANOTE SU FRASE DE RECUPERACIÓN";
 
 /* No comment provided by engineer. */
-"you received vertcoin!" = "¡ha recibido vertcoin!";
+"you received mobilecash!" = "¡ha recibido mobilecash!";
 
 /* No comment provided by engineer. */
 "Your wallet may be out of sync.\nThis can often be fixed by rescanning the blockchain." = "Su cartera puede estar desincronizada.\nCon frecuencia se puede solucionar escaneando de nuevo la cadena de bloques.";

@@ -1,5 +1,5 @@
 /* No comment provided by engineer. */
-"%@ is for 'verts'. %@ = 1 vertcoin." = "%1$@ είναι για τα verts. %2$@ = 1 vertcoin.";
+"%@ is for 'verts'. %@ = 1 mobilecash." = "%1$@ είναι για τα verts. %2$@ = 1 mobilecash.";
 
 /* No comment provided by engineer. */
 "%@ is not allowed to access the camera" = "%@ δεν επιτρέπεται να έχετε πρόσβαση στην κάμερα";
@@ -38,13 +38,13 @@
 "\nA device passcode is needed to safeguard your wallet. Go to settings and turn passcode on to continue." = "\nΈνας κωδικός συσκευής είναι απαραίτητος για τη διαφύλαξη του πορτοφολιού σας. Μεταβείτε στην επιλογή Ρυθμίσεις και ενεργοποιήστε τον κωδικό για να συνεχίσετε.";
 
 /* No comment provided by engineer. */
-"\nADDRESS ALREADY USED\n\nvertcoin addresses are intended for single use only\n\nre-use reduces privacy for both you and the recipient and can result in loss if the recipient doesn't directly control the address" = "\nΗ ΔΙΕΥΘΥΝΣΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ ΗΔΗ\n\nΟι διευθύνσεις vertcoin προορίζονται για μια χρήση μόνο\n\nΕπαναχρησιμοποίηση τους μειώνει την προστασία της ιδιωτικής ζωής τόσο της δικής σας όσο και του παραλήπτη και μπορεί να οδηγήσει σε απώλεια, εάν ο παραλήπτης δεν ελέγχει απευθείας τη διεύθυνση";
+"\nADDRESS ALREADY USED\n\nmobilecash addresses are intended for single use only\n\nre-use reduces privacy for both you and the recipient and can result in loss if the recipient doesn't directly control the address" = "\nΗ ΔΙΕΥΘΥΝΣΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ ΗΔΗ\n\nΟι διευθύνσεις mobilecash προορίζονται για μια χρήση μόνο\n\nΕπαναχρησιμοποίηση τους μειώνει την προστασία της ιδιωτικής ζωής τόσο της δικής σας όσο και του παραλήπτη και μπορεί να οδηγήσει σε απώλεια, εάν ο παραλήπτης δεν ελέγχει απευθείας τη διεύθυνση";
 
 /* No comment provided by engineer. */
 "\nallow camera access in\nSettings->Privacy->Camera->%@" = "\nεπιτρέψτε στην κάμερα πρόσβαση στις\nρυθμίσεις-> απορρήτο-> κάμερα->%@";
 
 /* No comment provided by engineer. */
-"\nDO NOT let anyone see your recovery\nphrase or they can spend your vertcoins.\n" = "\nΜΗΝ αφήσετε κανέναν να δεί την φράση\nανάκτησης σας αλλιώς μπορούν να ξοδεψουν τα vertcoins σας.\n";
+"\nDO NOT let anyone see your recovery\nphrase or they can spend your mobilecashs.\n" = "\nΜΗΝ αφήσετε κανέναν να δεί την φράση\nανάκτησης σας αλλιώς μπορούν να ξοδεψουν τα mobilecashs σας.\n";
 
 /* No comment provided by engineer. */
 "\nDO NOT take a screenshot.\nScreenshots are visible to other apps\nand devices.\n" = "\nΜΗΝ πάρτε λήψη της οθόνης. Οι λήψεις οθόνης είναι ορατές σε άλλες εφαρμογές\nκαι συσκευές.\n";
@@ -86,22 +86,22 @@
 "bad signature" = "λάθος υπογραφή";
 
 /* No comment provided by engineer. */
-"Vertcoin address" = "Διεύθυνση Vertcoin";
+"Mobilecash address" = "Διεύθυνση Mobilecash";
 
 /* No comment provided by engineer. */
-"Vertcoin addresses can also be copied to the clipboard. A vertcoin address always starts with '1' or '3'." = "Οι Διευθύνσεις Vertcoin μπορούν επίσης να αντιγραφούν στο πρόχειρο. Μια διεύθυνση vertcoin ξεκινά πάντα με το '1' ή το '3'.";
+"Mobilecash addresses can also be copied to the clipboard. A mobilecash address always starts with '1' or '3'." = "Οι Διευθύνσεις Mobilecash μπορούν επίσης να αντιγραφούν στο πρόχειρο. Μια διεύθυνση mobilecash ξεκινά πάντα με το '1' ή το '3'.";
 
 /* No comment provided by engineer. */
-"vertcoin network fee" = "Vertcoin αμοιβή δικτύου";
+"mobilecash network fee" = "Mobilecash αμοιβή δικτύου";
 
 /* No comment provided by engineer. */
-"vertcoin payments can't be less than %@" = "Οι πληρωμές Vertcoin δεν μπορεί να είναι μικρότερες από %@";
+"mobilecash payments can't be less than %@" = "Οι πληρωμές Mobilecash δεν μπορεί να είναι μικρότερες από %@";
 
 /* No comment provided by engineer. */
-"vertcoin transaction not signed" = "Η συναλλαγή vertcoin δεν έχει υπογραφεί";
+"mobilecash transaction not signed" = "Η συναλλαγή mobilecash δεν έχει υπογραφεί";
 
 /* No comment provided by engineer. */
-"vertcoin transaction outputs can't be less than %@" = "Η συναλλαγή εξόδου Vertcoin δεν μπορεί να είναι μικρότερη από %@";
+"mobilecash transaction outputs can't be less than %@" = "Η συναλλαγή εξόδου Mobilecash δεν μπορεί να είναι μικρότερη από %@";
 
 /* No comment provided by engineer. */
 "block #%d of %d" = "μπλόκ %1$d απο %2$d";
@@ -128,7 +128,7 @@
 "choose passcode for %@" = "επιλέξτε κωδικό πρόσβασης για το %@";
 
 /* No comment provided by engineer. */
-"clipboard doesn't contain a valid vertcoin address" = "Το πρόχειρο δεν περιέχει μία έγκυρη διεύθυνση vertcoin";
+"clipboard doesn't contain a valid mobilecash address" = "Το πρόχειρο δεν περιέχει μία έγκυρη διεύθυνση mobilecash";
 
 /* No comment provided by engineer. */
 "close app" = "κλείστε την εφαρμογή";
@@ -167,13 +167,13 @@
 "couldn't sweep balance" = "δεν μπορούσα να σαρώσω τα χρήματα";
 
 /* No comment provided by engineer. */
-"couldn't transmit payment to vertcoin network" = "δεν μπορούσα να μεταδώσω την πληρωμή στο δίκτυο vertcoin";
+"couldn't transmit payment to mobilecash network" = "δεν μπορούσα να μεταδώσω την πληρωμή στο δίκτυο mobilecash";
 
 /* No comment provided by engineer. */
-"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can access any other app's keychain data (and steal your vertcoins)." = "Η ΑΣΦΑΛΕΙΑ ΤΗΣ ΣΥΣΚΕΥΗΣ ΕΧΕΙ ΤΕΘΕΙ ΣΕ ΚΙΝΔΥΝΟ\nΟποιαδήποτε 'σπασμένη' εφαρμογή μπορεί να έχει πρόσβαση σε οποιαδήποτε άλλης εφαρμογής τα δεδομένα (και να κλέψει τα vertcoin σας).";
+"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can access any other app's keychain data (and steal your mobilecashs)." = "Η ΑΣΦΑΛΕΙΑ ΤΗΣ ΣΥΣΚΕΥΗΣ ΕΧΕΙ ΤΕΘΕΙ ΣΕ ΚΙΝΔΥΝΟ\nΟποιαδήποτε 'σπασμένη' εφαρμογή μπορεί να έχει πρόσβαση σε οποιαδήποτε άλλης εφαρμογής τα δεδομένα (και να κλέψει τα mobilecash σας).";
 
 /* No comment provided by engineer. */
-"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can access any other app's keychain data (and steal your vertcoins). Wipe this wallet immediately and restore on a secure device." = "Η ΑΣΦΑΛΕΙΑ ΤΗΣ ΣΥΣΚΕΥΗΣ ΕΧΕΙ ΤΕΘΕΙ ΣΕ ΚΙΝΔΥΝΟ\nΟποιαδήποτε 'σπασμένη' εφαρμογή μπορεί να έχει πρόσβαση σε οποιαδήποτε άλλης εφαρμογής τα δεδομένα (και να κλέψει τα vertcoin σας). Καθαρίστε το πορτοφόλι σας και επαναφέρετε το σε μια ασφαλή συσκευή.";
+"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can access any other app's keychain data (and steal your mobilecashs). Wipe this wallet immediately and restore on a secure device." = "Η ΑΣΦΑΛΕΙΑ ΤΗΣ ΣΥΣΚΕΥΗΣ ΕΧΕΙ ΤΕΘΕΙ ΣΕ ΚΙΝΔΥΝΟ\nΟποιαδήποτε 'σπασμένη' εφαρμογή μπορεί να έχει πρόσβαση σε οποιαδήποτε άλλης εφαρμογής τα δεδομένα (και να κλέψει τα mobilecash σας). Καθαρίστε το πορτοφόλι σας και επαναφέρετε το σε μια ασφαλή συσκευή.";
 
 /* No comment provided by engineer. */
 "do it later" = "θα το κάνω αργότερα";
@@ -191,7 +191,7 @@
 "enter old passcode" = "εισάγετε τον παλιό κωδικό πρόσβασης";
 
 /* No comment provided by engineer. */
-"error signing vertcoin transaction" = "σφάλμα υπογραφής συναλλαγής vertcoin";
+"error signing mobilecash transaction" = "σφάλμα υπογραφής συναλλαγής mobilecash";
 
 /* No comment provided by engineer. */
 "error signing transaction" = "σφάλμα υπογραφής συναλλαγής";
@@ -221,13 +221,13 @@
 "insufficient funds" = "ανεπαρκή χρήματα";
 
 /* No comment provided by engineer. */
-"insufficient funds for vertcoin network fee" = "ανεπαρκή χρηματοδότηση για την αμοιβή του δικτύου vertcoin";
+"insufficient funds for mobilecash network fee" = "ανεπαρκή χρηματοδότηση για την αμοιβή του δικτύου mobilecash";
 
 /* No comment provided by engineer. */
 "INVALID" = "ΑΚΥΡΟ";
 
 /* No comment provided by engineer. */
-"Let others scan this QR code to get your vertcoin address. Anyone can send vertcoins to your wallet by transferring them to your address." = "Αφήστε τους άλλους να σαρώσουν αυτόν τον κωδικό QR για να πάρουν την διεύθυνση των vertcoin σας. Ο καθένας μπορεί να στείλει vertcoin στο πορτοφόλι σας, μεταφέροντάς τα στη διεύθυνσή σας.";
+"Let others scan this QR code to get your mobilecash address. Anyone can send mobilecashs to your wallet by transferring them to your address." = "Αφήστε τους άλλους να σαρώσουν αυτόν τον κωδικό QR για να πάρουν την διεύθυνση των mobilecash σας. Ο καθένας μπορεί να στείλει mobilecash στο πορτοφόλι σας, μεταφέροντάς τα στη διεύθυνσή σας.";
 
 /* No comment provided by engineer. */
 "minute" = "λεπτό";
@@ -254,16 +254,16 @@
 "no peers found" = "δε βρέθηκαν κόμβοι";
 
 /* No comment provided by engineer. */
-"not a vertcoin QR code" = "δεν είναι κωδικός QR για vertcoin";
+"not a mobilecash QR code" = "δεν είναι κωδικός QR για mobilecash";
 
 /* No comment provided by engineer. */
-"not a valid vertcoin address" = "δεν είναι μια έγκυρη διεύθυνση vertcoin";
+"not a valid mobilecash address" = "δεν είναι μια έγκυρη διεύθυνση mobilecash";
 
 /* No comment provided by engineer. */
 "not a valid private key" = "δεν είναι ενα έγκυρο ιδιωτικό κλειδί";
 
 /* No comment provided by engineer. */
-"not connected to the vertcoin network" = "δεν είστε συνδεδεμένος με το δίκτυο vertcoin";
+"not connected to the mobilecash network" = "δεν είστε συνδεδεμένος με το δίκτυο mobilecash";
 
 /* No comment provided by engineer. */
 "ok" = "Εντάξει";
@@ -296,7 +296,7 @@
 "post-dated" = "μετα-χρονολογημένη";
 
 /* No comment provided by engineer. */
-"Receive vertcoins at this address: %@" = "Λάβετε vertcoins σε αυτή τη διεύθυνση: %@";
+"Receive mobilecashs at this address: %@" = "Λάβετε mobilecashs σε αυτή τη διεύθυνση: %@";
 
 /* No comment provided by engineer. */
 "received" = "ελήφθησαν";
@@ -341,7 +341,7 @@
 "reset" = "επαναφορά";
 
 /* No comment provided by engineer. */
-"Scan someone else's QR code to get their vertcoin address. You can send a payment to anyone with an address." = "Σάρωση του κώδικα QR κάποιου άλλου ατόμου για να πάρετε τη διεύθυνση vertcoin τους. Μπορείτε να στείλετε μια πληρωμή σε οποιοδήποτε με μια διεύθυνση.";
+"Scan someone else's QR code to get their mobilecash address. You can send a payment to anyone with an address." = "Σάρωση του κώδικα QR κάποιου άλλου ατόμου για να πάρετε τη διεύθυνση mobilecash τους. Μπορείτε να στείλετε μια πληρωμή σε οποιοδήποτε με μια διεύθυνση.";
 
 /* No comment provided by engineer. */
 "Screenshots are visible to other apps and devices. Generate a new recovery phrase and keep it secret." = "Οι λήψεις οθόνης είναι ορατές σε άλλες εφαρμογές και συσκευές. Παράξτε μια νέα φράση ανάκτησης και κρατήστε την μυστική.";
@@ -353,7 +353,7 @@
 "seen by %d of %d peers" = "το έχουν δει %1$d από τους %2$d κόμβους";
 
 /* No comment provided by engineer. */
-"Send %@ (%@) from this private key into your wallet? The vertcoin network will receive a fee of %@ (%@)." = "Στείλτε %1$@ (%2$@) από το ιδιωτικό κλειδί σας στο πορτοφόλι σας? Το δίκτυο vertcoin θα λάβει ένα τέλος %3$@ (%4$@).";
+"Send %@ (%@) from this private key into your wallet? The mobilecash network will receive a fee of %@ (%@)." = "Στείλτε %1$@ (%2$@) από το ιδιωτικό κλειδί σας στο πορτοφόλι σας? Το δίκτυο mobilecash θα λάβει ένα τέλος %3$@ (%4$@).";
 
 /* No comment provided by engineer. */
 "send address as email" = "αποστολή διεύθυνσης ως email";
@@ -404,10 +404,10 @@
 "the app will now close" = "η εφαρμογή θα κλείσει τώρα";
 
 /* No comment provided by engineer. */
-"This is your vertcoin address. Tap to copy it or send it by email or sms. The address will change each time you receive funds, but old addresses always work." = "Αυτή είναι η διεύθυνση vertcoin σας. Πατήστε για να την αντιγράψετε ή να το στείλετε με email ή sms. Η διεύθυνση θα αλλάξει κάθε φορά που λαμβάνετε χρήματα, αλλά λειτουργούν πάντα οι παλιές διευθύνσεις.";
+"This is your mobilecash address. Tap to copy it or send it by email or sms. The address will change each time you receive funds, but old addresses always work." = "Αυτή είναι η διεύθυνση mobilecash σας. Πατήστε για να την αντιγράψετε ή να το στείλετε με email ή sms. Η διεύθυνση θα αλλάξει κάθε φορά που λαμβάνετε χρήματα, αλλά λειτουργούν πάντα οι παλιές διευθύνσεις.";
 
 /* No comment provided by engineer. */
-"This is your vertcoin balance. Vertcoin is a currency. The exchange rate changes with the market." = "Αυτό είναι το υπόλοιπό σας σε vertcoin. Το Vertcoin είναι ένα νόμισμα. Οι μεταβολές των συναλλαγματικών ισοτιμιών αλλάζουν με την αγορά.";
+"This is your mobilecash balance. Mobilecash is a currency. The exchange rate changes with the market." = "Αυτό είναι το υπόλοιπό σας σε mobilecash. Το Mobilecash είναι ένα νόμισμα. Οι μεταβολές των συναλλαγματικών ισοτιμιών αλλάζουν με την αγορά.";
 
 /* No comment provided by engineer. */
 "this payment address is already in your wallet" = "αυτή η διεύθυνση πληρωμής είναι ήδη στο πορτοφόλι σας";
@@ -494,7 +494,7 @@
 "WRITE DOWN YOUR RECOVERY PHRASE" = "ΓΡΑΨΤΕ ΤΗΝ ΦΡΑΣΗ ΑΝΑΚΤΗΣΗΣ ΣΑΣ";
 
 /* No comment provided by engineer. */
-"you received vertcoin!" = "λάβατε vertcoin!";
+"you received mobilecash!" = "λάβατε mobilecash!";
 
 /* No comment provided by engineer. */
 "Your wallet may be out of sync.\nThis can often be fixed by rescanning the blockchain." = "Το πορτοφόλι σας μπορεί να είναι εκτός συγχρονισμού. Αυτό μπορεί συχνά να διορθωθεί με την επανεξέταση των μπλόκ συναλλαγών.";

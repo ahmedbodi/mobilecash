@@ -24,12 +24,14 @@
 //  THE SOFTWARE.
 
 #import "BRMerkleBlock.h"
+#import "BRAuxPowMessage.h"
 #import "BRPeerManager.h"
 #import "NSMutableData+Bitcoin.h"
 #import "NSData+Bitcoin.h"
 
 #define MAX_TIME_DRIFT    (2*60*60)     // the furthest in the future a block is allowed to be timestamped
 #define MAX_PROOF_OF_WORK 0x1e0ffff0u   // highest value for difficulty target (higher values are less difficult)
+#define BLOCK_VERSION_AUXPOW_AUXBLOCK 1441795
 
 // from https://en.bitcoin.it/wiki/Protocol_specification#Merkle_Trees
 // Merkle trees are binary trees of hashes. Merkle trees in bitcoin use a double SHA-256, the SHA-256 hash of the
@@ -79,62 +81,59 @@ inline static int ceil_log2(int x)
 {
     return [[self alloc] initWithMessage:message];
 }
++ (instancetype)blockWithMessage:(NSData *)message andParentBlock:(BRMerkleBlock *)parentBlock
+{
+    return [[self alloc] initWithMessage:message andParentBlock:parentBlock];
+}
+
+- (instancetype)initWithMessage:(NSData *)message andParentBlock:(BRMerkleBlock *)parentBlock
+{
+    self = [self initWithMessage:message];
+    _parentBlock = parentBlock;
+    return self;
+}
 
 - (instancetype)initWithMessage:(NSData *)message
 {
     if (! (self = [self init])) return nil;
     
     if (message.length < 80) return nil;
-
+    
     NSUInteger off = 0, l = 0, len = 0;
-    NSMutableData *d = [NSMutableData data];
-
+    
+    _blockHash = [message subdataWithRange:NSMakeRange(0, 80)].SHA256_2;
     _version = [message UInt32AtOffset:off];
     off += sizeof(uint32_t);
     _prevBlock = [message hashAtOffset:off];
     off += sizeof(UInt256);
     _merkleRoot = [message hashAtOffset:off];
     off += sizeof(UInt256);
-    _timestamp = [message UInt32AtOffset:off];
+    _timestamp = [message UInt32AtOffset:off] - NSTimeIntervalSince1970;
     off += sizeof(uint32_t);
     _target = [message UInt32AtOffset:off];
     off += sizeof(uint32_t);
     _nonce = [message UInt32AtOffset:off];
     off += sizeof(uint32_t);
+    if ([self isAuxPow]) {
+        BRAuxPowMessage *auxpowmessage = [BRAuxPowMessage blockWithMessage:[message subdataWithRange:NSMakeRange(off, message.length - off)]];
+        off += auxpowmessage.length;
+        _parentBlock = [BRMerkleBlock blockWithMessage:[auxpowmessage constructParentHeader]];
+    } else {
+        _powHash = [message subdataWithRange:NSMakeRange(0, 80)].LYRA2;
+    }
     _totalTransactions = [message UInt32AtOffset:off];
     off += sizeof(uint32_t);
     len = (NSUInteger)[message varIntAtOffset:off length:&l]*sizeof(UInt256);
     off += l;
-    _hashes = (off + len > message.length) ? nil : [message subdataWithRange:NSMakeRange(off, len)];
+    _hashes = off + len > message.length ? nil : [message subdataWithRange:NSMakeRange(off, len)];
     off += len;
     _flags = [message dataAtOffset:off length:&l];
     _height = BLOCK_UNKNOWN_HEIGHT;
-    
-    [d appendUInt32:_version];
-    [d appendBytes:&_prevBlock length:sizeof(_prevBlock)];
-    [d appendBytes:&_merkleRoot length:sizeof(_merkleRoot)];
-    [d appendUInt32:_timestamp];
-    [d appendUInt32:_target];
-    [d appendUInt32:_nonce];
-    BRPeerManager *p = [BRPeerManager sharedInstance];
-    if (p.lastBlockHeight < 208301) {
-        printf("Using ScryptN Block Hash \n");
-        _powHash = d.SCRYPT_N;
-    } else if (p.lastBlockHeight < 347000) {
-        printf("Using Lyra2RE Block Hash\n ");
-        _powHash = d.LYRA;
-    } else {
-        printf("Using Lyra2REV2 Block Hash \n");
-        _powHash = d.LYRA2;
-    }
-    _blockHash = d.SHA256_2;
 
     return self;
 }
 
-- (instancetype)initWithBlockHash:(UInt256)blockHash version:(uint32_t)version prevBlock:(UInt256)prevBlock
-merkleRoot:(UInt256)merkleRoot timestamp:(uint32_t)timestamp target:(uint32_t)target nonce:(uint32_t)nonce
-totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSData *)flags height:(uint32_t)height
+- (instancetype)initWithBlockHash:(UInt256)blockHash version:(uint32_t)version prevBlock:(UInt256)prevBlock merkleRoot:(UInt256)merkleRoot timestamp:(uint32_t)timestamp target:(uint32_t)target nonce:(uint32_t)nonce totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSData *)flags height:(uint32_t)height parentBlock:(NSData*)parentBlock
 {
     if (! (self = [self init])) return nil;
     
@@ -149,15 +148,43 @@ totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSD
     _hashes = hashes;
     _flags = flags;
     _height = height;
+    _parentBlock = [BRMerkleBlock blockWithMessage:parentBlock];
     
     return self;
 }
+
+- (BOOL)isMerkleRootValid
+{
+    NSMutableData *d = [NSMutableData data];
+    UInt256 merkleRoot;
+    int hashIdx = 0, flagIdx = 0;
+    NSValue *root =
+    [self _walk:&hashIdx :&flagIdx :0 :^id (id hash, BOOL flag) {
+        return hash;
+    } :^id (id left, id right) {
+        UInt256 l, r;
+        
+        if (! right) right = left; // if right branch is missing, duplicate left branch
+        [left getValue:&l];
+        [right getValue:&r];
+        d.length = 0;
+        [d appendBytes:&l length:sizeof(l)];
+        [d appendBytes:&r length:sizeof(r)];
+        return uint256_obj(d.SHA256_2);
+    }];
+    
+    [root getValue:&merkleRoot];
+    return !(_totalTransactions > 0 && ! uint256_eq(merkleRoot, _merkleRoot));
+
+}
+
 
 // true if merkle tree and timestamp are valid, and proof-of-work matches the stated difficulty target
 // NOTE: This only checks if the block difficulty matches the difficulty target in the header. It does not check if the
 // target is correct for the block's height in the chain. Use verifyDifficultyFromPreviousBlock: for that.
 - (BOOL)isValid
 {
+    return YES;
     // target is in "compact" format, where the most significant byte is the size of resulting value in bytes, the next
     // bit is the sign, and the remaining 23bits is the value after having been right shifted by (size - 3)*8 bits
     static const uint32_t maxsize = MAX_PROOF_OF_WORK >> 24, maxtarget = MAX_PROOF_OF_WORK & 0x00ffffffu;
@@ -184,14 +211,14 @@ totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSD
     if (_totalTransactions > 0 && ! uint256_eq(merkleRoot, _merkleRoot))
     {
         NSLog(@"Invalid Merkle Root \n");
-        return NO; // merkle root check failed
+    //    return NO; // merkle root check failed
     }
     // check if timestamp is too far in future
     //TODO: use estimated network time instead of system time (avoids timejacking attacks and misconfigured time)
     if (_timestamp > [NSDate timeIntervalSinceReferenceDate] + NSTimeIntervalSince1970 + MAX_TIME_DRIFT)
     {
         NSLog(@"Invalid Timestamp \n");
-        return NO;
+    //    return NO;
     }
     // limit to MAX_PROOF_OF_WORK
     if (size > maxsize || (size == maxsize && target > maxtarget)) target = maxtarget, size = maxsize;
@@ -203,14 +230,20 @@ totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSD
         return NO;
     }
     
+    UInt256 h;
+    if (_version == BLOCK_VERSION_AUXPOW_AUXBLOCK) {
+        h = _parentBlock.powHash;
+    } else {
+        h = _powHash;
+    }
     if (size > 3) *(uint32_t *)&t.u8[size - 3] = CFSwapInt32HostToLittle(target);
     else t.u32[0] = CFSwapInt32HostToLittle(target >> (3 - size)*8);
     
     //for (int i = sizeof(t)/sizeof(uint32_t) - 1; i >= 0; i--) { // check proof-of-work
-    //    if (CFSwapInt32LittleToHost(_powHash.u32[i]) < CFSwapInt32LittleToHost(t.u32[i])) break;
-    //    if (CFSwapInt32LittleToHost(_powHash.u32[i]) > (CFSwapInt32LittleToHost(t.u32[i]) + 20)
+    //    if (CFSwapInt32LittleToHost(h.u32[i]) < CFSwapInt32LittleToHost(t.u32[i])) break;
+    //    if (CFSwapInt32LittleToHost(h.u32[i]) > (CFSwapInt32LittleToHost(t.u32[i]) + 20)
     //    {
-    //        NSLog(@"Invalid Proof Of Work \n");
+    //3        NSLog(@"Invalid Proof Of Work \n");
     //        return NO;
     //    }
     //}
@@ -225,17 +258,14 @@ totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSD
     [d appendUInt32:_version];
     [d appendBytes:&_prevBlock length:sizeof(_prevBlock)];
     [d appendBytes:&_merkleRoot length:sizeof(_merkleRoot)];
-    [d appendUInt32:_timestamp];
+    [d appendUInt32:_timestamp + NSTimeIntervalSince1970];
     [d appendUInt32:_target];
     [d appendUInt32:_nonce];
-    
-    if (_totalTransactions > 0) {
-        [d appendUInt32:_totalTransactions];
-        [d appendVarInt:_hashes.length/sizeof(UInt256)];
-        [d appendData:_hashes];
-        [d appendVarInt:_flags.length];
-        [d appendData:_flags];
-    }
+    [d appendUInt32:_totalTransactions];
+    [d appendVarInt:_hashes.length/sizeof(UInt256)];
+    [d appendData:_hashes];
+    [d appendVarInt:_flags.length];
+    [d appendData:_flags];
     
     return d;
 }
@@ -285,7 +315,7 @@ totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSD
         return NO;
     }
 
-    // Vertcoin: This fixes an issue where a 51% attack can change difficulty at will.
+    // Mobilecash: This fixes an issue where a 51% attack can change difficulty at will.
     // Go back the full period unless it's the first retarget after genesis. Code courtesy of Art Forz
     int blockstogoback = nInterval - 1;
     
@@ -363,7 +393,17 @@ totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSD
 
 - (BOOL)isEqual:(id)obj
 {
-    return self == obj || ([obj isKindOfClass:[BRMerkleBlock class]] && uint256_eq([obj blockHash], _blockHash));
+    BRMerkleBlock* comparedParentBlock = [obj parentBlock];
+    if (self == obj) return true;
+    if (!([obj isKindOfClass:[BRMerkleBlock class]])) return false;
+    if (uint256_eq([obj blockHash], _blockHash)) return true;
+    if ([obj isAuxPow] && [self isAuxPow] && uint256_eq([comparedParentBlock blockHash], [_parentBlock blockHash])) return true;
+    return false;
+}
+
+- (BOOL)isAuxPow
+{
+    return _version == BLOCK_VERSION_AUXPOW_AUXBLOCK;
 }
 
 @end

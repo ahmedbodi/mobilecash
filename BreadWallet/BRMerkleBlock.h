@@ -27,9 +27,10 @@
 
 #define BLOCK_UNKNOWN_HEIGHT      INT32_MAX
 
-static const int64_t nTargetTimespan = 3.5 * 24 * 60 * 60; // Vertcoin: 3.5 days
-static const int64_t nTargetSpacing = 2.5 * 60; // Vertcoin: 2.5 minutes
+static const int64_t nTargetTimespan = 1.4 * 24 * 60 * 60; // Mobilecash: less hours
+static const int64_t nTargetSpacing = 60; // Mobilecash: 1 minute
 static const int64_t nInterval = nTargetTimespan / nTargetSpacing;
+
 
 typedef union _UInt256 UInt256;
 
@@ -47,6 +48,7 @@ typedef union _UInt256 UInt256;
 @property (nonatomic, readonly) NSData *hashes;
 @property (nonatomic, readonly) NSData *flags;
 @property (nonatomic, assign) uint32_t height;
+@property (nonatomic, readonly) BRMerkleBlock *parentBlock;
 
 @property (nonatomic, readonly) NSArray *txHashes; // the matched tx hashes in the block
 
@@ -59,11 +61,13 @@ typedef union _UInt256 UInt256;
 
 // message can be either a merkleblock or header message
 + (instancetype)blockWithMessage:(NSData *)message;
++ (instancetype)blockWithMessage:(NSData *)message andParentBlock:(BRMerkleBlock *)parentBlock;
 
 - (instancetype)initWithMessage:(NSData *)message;
+- (instancetype)initWithMessage:(NSData *)message andParentBlock:(BRMerkleBlock *)parentBlock;
 - (instancetype)initWithBlockHash:(UInt256)blockHash version:(uint32_t)version prevBlock:(UInt256)prevBlock
 merkleRoot:(UInt256)merkleRoot timestamp:(uint32_t)timestamp target:(uint32_t)target nonce:(uint32_t)nonce
-totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSData *)flags height:(uint32_t)height;
+totalTransactions:(uint32_t)totalTransactions hashes:(NSData *)hashes flags:(NSData *)flags height:(uint32_t)height parentBlock:(NSData*)parentBlock;
 
 // true if the given tx hash is known to be included in the block
 - (BOOL)containsTxHash:(UInt256)txHash;

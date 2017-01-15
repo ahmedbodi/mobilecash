@@ -24,6 +24,7 @@
 //  THE SOFTWARE.
 
 #import "BRPeer.h"
+#import "BRAuxPowMessage.h"
 #import "BRPeerManager.h"
 #import "BRTransaction.h"
 #import "BRMerkleBlock.h"
@@ -36,6 +37,7 @@
 #define NSLog(...)
 #endif
 
+#define BLOCK_VERSION_AUXPOW_AUXBLOCK 1441795
 #define HEADER_LENGTH      24
 #define MAX_MSG_LENGTH     0x02000000
 #define MAX_GETDATA_HASHES 50000
@@ -797,7 +799,7 @@ services:(uint64_t)services
     // immediately, and switch to requesting blocks when we receive a header newer than earliestKeyTime
     NSTimeInterval t = [message UInt32AtOffset:l + 81*(count - 1) + 68] - NSTimeIntervalSince1970;
 
-    if (count >= 2000 || t + 7*24*60*60 >= self.earliestKeyTime - 2*60*60) {
+    if (count >= 1 || t + 7*24*60*60 >= self.earliestKeyTime - 2*60*60) {
         NSValue *firstHash = uint256_obj([message subdataWithRange:NSMakeRange(l, 80)].SHA256_2),
         *lastHash = uint256_obj([message subdataWithRange:NSMakeRange(l + 81*(count - 1), 80)].SHA256_2);
         
@@ -846,8 +848,28 @@ services:(uint64_t)services
     }
     
     for (NSUInteger off = l; off < l + 81*count; off += 81) {
-        BRMerkleBlock *block = [BRMerkleBlock blockWithMessage:[message subdataWithRange:NSMakeRange(off, 81)]];
-    
+        uint32_t blockversion = [message UInt32AtOffset:off];
+        NSLog(@"Block Version %u", blockversion);
+        BRMerkleBlock *block;
+        
+        int minauxversion = 0x02;
+        int isauxpow = 0x1601;
+        int versionmask = 0xff;
+        if ((blockversion >> 8) == isauxpow && (blockversion & versionmask) >= minauxversion && blockversion != 1442051) {
+            NSData* blockHeader = [message subdataWithRange:NSMakeRange(off, 80)];
+            BRAuxPowMessage *auxpowmessage = [BRAuxPowMessage blockWithMessage:[message subdataWithRange:NSMakeRange(off, message.length - off)]];
+            
+            off += auxpowmessage.length;
+            uint8_t nulltermination = [message UInt8AtOffset:off];
+            assert(nulltermination == 0x00);
+            
+            off += sizeof(uint8_t);
+            block = [BRMerkleBlock blockWithMessage:blockHeader andParentBlock:[BRMerkleBlock blockWithMessage:[auxpowmessage constructParentHeader]]];
+            
+            off -= 81;
+        } else {
+            block = [BRMerkleBlock blockWithMessage:[message subdataWithRange:NSMakeRange(off, 81)]];
+        }
         if (! block.valid) {
             [self error:@"invalid block header %@", uint256_obj(block.blockHash)];
             return;

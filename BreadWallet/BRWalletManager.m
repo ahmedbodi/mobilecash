@@ -50,7 +50,7 @@
 #define TICKER_FAILOVER_URL  @"https://bitpay.com/rates"
 
 #define SEED_ENTROPY_LENGTH   (128/8)
-#define SEC_ATTR_SERVICE      @"com.ahmedbodiwala.vertlet"
+#define SEC_ATTR_SERVICE      @"com.ahmedbodiwala.cashlet"
 #define DEFAULT_CURRENCY_CODE @"USD"
 #define DEFAULT_SPENT_LIMIT   SATOSHIS
 
@@ -239,7 +239,7 @@ static NSDictionary *getKeychainDict(NSString *key, NSError **error)
     self.format.negativeFormat = [self.format.positiveFormat
                                   stringByReplacingCharactersInRange:[self.format.positiveFormat rangeOfString:@"#"]
                                   withString:@"-#"];
-    self.format.currencyCode = @"VTC";
+    self.format.currencyCode = @"MBL";
     self.format.currencySymbol = BTC NARROW_NBSP;
     self.format.maximumFractionDigits = 8;
     self.format.minimumFractionDigits = 0; // iOS 8 bug, minimumFractionDigits now has to be set after currencySymbol

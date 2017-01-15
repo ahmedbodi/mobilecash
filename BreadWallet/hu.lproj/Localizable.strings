@@ -1,5 +1,5 @@
 /* No comment provided by engineer. */
-"%@ is for 'verts'. %@ = 1 vertcoin." = "A %1$@ 'bit'-et jelent.\n%2$@ = 1 vertcoin.";
+"%@ is for 'verts'. %@ = 1 mobilecash." = "A %1$@ 'bit'-et jelent.\n%2$@ = 1 mobilecash.";
 
 /* No comment provided by engineer. */
 "%@ is not allowed to access the camera" = "%@ nem tud hozzáférni a kamerához";
@@ -38,13 +38,13 @@
 "\nA device passcode is needed to safeguard your wallet. Go to settings and turn passcode on to continue." = "\nA tárcád biztonságban tartásához egy készülék-jelkód is szükséges. A folytatáshoz ezt kapcsold be a telefonod beállításainál.";
 
 /* No comment provided by engineer. */
-"\nADDRESS ALREADY USED\n\nvertcoin addresses are intended for single use only\n\nre-use reduces privacy for both you and the recipient and can result in loss if the recipient doesn't directly control the address" = "\nMÁR HASZNÁLTAD EZT A CÍMET\n\na vertcoin címek egyszeri használatra szólnak\n\naz ismételt használat mindkét fél tranzakcióinak titkosságát csökkenti, továbbá az oda küldött pénz elvesztését is okozhatja, ha a másik fél nem közvetlenül kontrollálja a címet";
+"\nADDRESS ALREADY USED\n\nmobilecash addresses are intended for single use only\n\nre-use reduces privacy for both you and the recipient and can result in loss if the recipient doesn't directly control the address" = "\nMÁR HASZNÁLTAD EZT A CÍMET\n\na mobilecash címek egyszeri használatra szólnak\n\naz ismételt használat mindkét fél tranzakcióinak titkosságát csökkenti, továbbá az oda küldött pénz elvesztését is okozhatja, ha a másik fél nem közvetlenül kontrollálja a címet";
 
 /* No comment provided by engineer. */
 "\nallow camera access in\nSettings->Privacy->Camera->%@" = "\nengedélyezd a kamera használatát a\nBeállítások->Adatvédelem->Kamera->%@ menüpontban";
 
 /* No comment provided by engineer. */
-"\nDO NOT let anyone see your recovery\nphrase or they can spend your vertcoins.\n" = "\nNE engedd, hogy más lássa a helyreállítási\nkódmondatodat, különben elköltheti a\nvertcoinjaidat.";
+"\nDO NOT let anyone see your recovery\nphrase or they can spend your mobilecashs.\n" = "\nNE engedd, hogy más lássa a helyreállítási\nkódmondatodat, különben elköltheti a\nmobilecashjaidat.";
 
 /* No comment provided by engineer. */
 "\nDO NOT take a screenshot.\nScreenshots are visible to other apps\nand devices.\n" = "\nNE csinálj képernyőmentést!\nA képernyőmentések elérhetőek más\nalkalmazások és eszközök számára!\n";
@@ -86,22 +86,22 @@
 "bad signature" = "hibás aláírás";
 
 /* No comment provided by engineer. */
-"Vertcoin address" = "Vertcoin cím";
+"Mobilecash address" = "Mobilecash cím";
 
 /* No comment provided by engineer. */
-"Vertcoin addresses can also be copied to the clipboard. A vertcoin address always starts with '1' or '3'." = "Vertcoin címeket a vágólapra is lehet másolni. Egy vertcoin cím mindig '1'-gyel vagy '3'-mal kezdődik.";
+"Mobilecash addresses can also be copied to the clipboard. A mobilecash address always starts with '1' or '3'." = "Mobilecash címeket a vágólapra is lehet másolni. Egy mobilecash cím mindig '1'-gyel vagy '3'-mal kezdődik.";
 
 /* No comment provided by engineer. */
-"vertcoin network fee" = "vertcoin hálózati díj";
+"mobilecash network fee" = "mobilecash hálózati díj";
 
 /* No comment provided by engineer. */
-"vertcoin payments can't be less than %@" = "a vertcoin fizetés összege nem lehet kevesebb, mint %@";
+"mobilecash payments can't be less than %@" = "a mobilecash fizetés összege nem lehet kevesebb, mint %@";
 
 /* No comment provided by engineer. */
-"vertcoin transaction not signed" = "a vertcoin tranzakció nincs aláírva";
+"mobilecash transaction not signed" = "a mobilecash tranzakció nincs aláírva";
 
 /* No comment provided by engineer. */
-"vertcoin transaction outputs can't be less than %@" = "a vertcoin tranzakció kimeneteinek összege nem lehet kisebb, mint %@";
+"mobilecash transaction outputs can't be less than %@" = "a mobilecash tranzakció kimeneteinek összege nem lehet kisebb, mint %@";
 
 /* No comment provided by engineer. */
 "block #%d of %d" = "%1$d. blokk a %2$d-ból/-ből";
@@ -128,7 +128,7 @@
 "choose passcode for %@" = "válassz jelkódot a következőhöz: %@";
 
 /* No comment provided by engineer. */
-"clipboard doesn't contain a valid vertcoin address" = "a vágólap nem tartalmaz érvényes vertcoin címet";
+"clipboard doesn't contain a valid mobilecash address" = "a vágólap nem tartalmaz érvényes mobilecash címet";
 
 /* No comment provided by engineer. */
 "close app" = "alkalmazás bezárása";
@@ -167,13 +167,13 @@
 "couldn't sweep balance" = "az egyenleg átvitele nem sikerült";
 
 /* No comment provided by engineer. */
-"couldn't transmit payment to vertcoin network" = "nem sikerült a tranzakciót a vertcoin hálózatra továbbítani";
+"couldn't transmit payment to mobilecash network" = "nem sikerült a tranzakciót a mobilecash hálózatra továbbítani";
 
 /* No comment provided by engineer. */
-"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can access any other app's keychain data (and steal your vertcoins)." = "KÉSZÜLÉK BIZTONSÁGA KOMPROMITTÁLVA\nBármilyen 'jailbreak' alkalmazás hozzáférhet a többi alkalmazás kulcskarikájához (és ellophatja a vertcoinjaidat).";
+"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can access any other app's keychain data (and steal your mobilecashs)." = "KÉSZÜLÉK BIZTONSÁGA KOMPROMITTÁLVA\nBármilyen 'jailbreak' alkalmazás hozzáférhet a többi alkalmazás kulcskarikájához (és ellophatja a mobilecashjaidat).";
 
 /* No comment provided by engineer. */
-"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can access any other app's keychain data (and steal your vertcoins). Wipe this wallet immediately and restore on a secure device." = "KÉSZÜLÉK BIZTONSÁGA KOMPROMITTÁLVA\nBármilyen 'jailbreak' alkalmazás hozzáférhet a többi alkalmazás kulcskarikájához (és ellophatja a vertcoinjaidat). Töröld ezt a tárcát azonnal és állítsd helyre egy biztonságos eszközön.";
+"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can access any other app's keychain data (and steal your mobilecashs). Wipe this wallet immediately and restore on a secure device." = "KÉSZÜLÉK BIZTONSÁGA KOMPROMITTÁLVA\nBármilyen 'jailbreak' alkalmazás hozzáférhet a többi alkalmazás kulcskarikájához (és ellophatja a mobilecashjaidat). Töröld ezt a tárcát azonnal és állítsd helyre egy biztonságos eszközön.";
 
 /* No comment provided by engineer. */
 "do it later" = "később leírom";
@@ -191,7 +191,7 @@
 "enter old passcode" = "írd be a régi jelkódot";
 
 /* No comment provided by engineer. */
-"error signing vertcoin transaction" = "hiba a vertcoin tranzakció aláírása közben";
+"error signing mobilecash transaction" = "hiba a mobilecash tranzakció aláírása közben";
 
 /* No comment provided by engineer. */
 "error signing transaction" = "hiba a tranzakció aláírása közben";
@@ -221,13 +221,13 @@
 "insufficient funds" = "fedezethiány";
 
 /* No comment provided by engineer. */
-"insufficient funds for vertcoin network fee" = "fedezethiány a vertcoin hálózati díjra";
+"insufficient funds for mobilecash network fee" = "fedezethiány a mobilecash hálózati díjra";
 
 /* No comment provided by engineer. */
 "INVALID" = "ÉRVÉNYTELEN";
 
 /* No comment provided by engineer. */
-"Let others scan this QR code to get your vertcoin address. Anyone can send vertcoins to your wallet by transferring them to your address." = "Engedd hogy ezt a QR kódot beolvassa aki vertcoint akar neked küldeni.\nA címedet használva bárki tud vertcoint küldeni a tárcádba.";
+"Let others scan this QR code to get your mobilecash address. Anyone can send mobilecashs to your wallet by transferring them to your address." = "Engedd hogy ezt a QR kódot beolvassa aki mobilecasht akar neked küldeni.\nA címedet használva bárki tud mobilecasht küldeni a tárcádba.";
 
 /* No comment provided by engineer. */
 "minute" = "perc";
@@ -254,16 +254,16 @@
 "no peers found" = "nincs elérhető hálózati csomópont";
 
 /* No comment provided by engineer. */
-"not a vertcoin QR code" = "nem vertcoin QR kód";
+"not a mobilecash QR code" = "nem mobilecash QR kód";
 
 /* No comment provided by engineer. */
-"not a valid vertcoin address" = "nem érvényes vertcoin cím";
+"not a valid mobilecash address" = "nem érvényes mobilecash cím";
 
 /* No comment provided by engineer. */
 "not a valid private key" = "nem érvényes privát kulcs";
 
 /* No comment provided by engineer. */
-"not connected to the vertcoin network" = "nincs csatlakozva a vertcoin hálózathoz";
+"not connected to the mobilecash network" = "nincs csatlakozva a mobilecash hálózathoz";
 
 /* No comment provided by engineer. */
 "ok" = "ok";
@@ -296,7 +296,7 @@
 "post-dated" = "későbbre keltezett";
 
 /* No comment provided by engineer. */
-"Receive vertcoins at this address: %@" = "Fogadj vertcoint ezen a címen: %@";
+"Receive mobilecashs at this address: %@" = "Fogadj mobilecasht ezen a címen: %@";
 
 /* No comment provided by engineer. */
 "received" = "fogadva";
@@ -341,7 +341,7 @@
 "reset" = "visszaállít";
 
 /* No comment provided by engineer. */
-"Scan someone else's QR code to get their vertcoin address. You can send a payment to anyone with an address." = "Olvasd be valaki másnak a QR kódját, hogy hozzájuss a vertcoin címéhez. Bárkinek küldhetsz pénzt, akinek van ilyen címe.";
+"Scan someone else's QR code to get their mobilecash address. You can send a payment to anyone with an address." = "Olvasd be valaki másnak a QR kódját, hogy hozzájuss a mobilecash címéhez. Bárkinek küldhetsz pénzt, akinek van ilyen címe.";
 
 /* No comment provided by engineer. */
 "Screenshots are visible to other apps and devices. Generate a new recovery phrase and keep it secret." = "A képernyőmentések láthatóak más alkalmazások és eszközök számára. Generálj egy új helyreállítási kódmondatot és tartsd titokban.";
@@ -353,7 +353,7 @@
 "seen by %d of %d peers" = "látta: %1$d csomópont a(z) %2$d-ból/-ből";
 
 /* No comment provided by engineer. */
-"Send %@ (%@) from this private key into your wallet? The vertcoin network will receive a fee of %@ (%@)." = "Átvezessem a következő egyenleget a privát kulcsról a tárcádba: %1$@ (%2$@)? A vertcoin hálózati díj %3$@ (%4$@) lesz.";
+"Send %@ (%@) from this private key into your wallet? The mobilecash network will receive a fee of %@ (%@)." = "Átvezessem a következő egyenleget a privát kulcsról a tárcádba: %1$@ (%2$@)? A mobilecash hálózati díj %3$@ (%4$@) lesz.";
 
 /* No comment provided by engineer. */
 "send address as email" = "cím küldése emailben";
@@ -404,10 +404,10 @@
 "the app will now close" = "az alkalmazás most bezárul";
 
 /* No comment provided by engineer. */
-"This is your vertcoin address. Tap to copy it or send it by email or sms. The address will change each time you receive funds, but old addresses always work." = "Ez a vertcoin címed. Koppints rá a másoláshoz vagy továbbküldéshez üzenetként vagy emailként. Ez a cím változni fog minden alkalommal amikor pénzt kapsz, de a régi címeid továbbra is működni fognak.";
+"This is your mobilecash address. Tap to copy it or send it by email or sms. The address will change each time you receive funds, but old addresses always work." = "Ez a mobilecash címed. Koppints rá a másoláshoz vagy továbbküldéshez üzenetként vagy emailként. Ez a cím változni fog minden alkalommal amikor pénzt kapsz, de a régi címeid továbbra is működni fognak.";
 
 /* No comment provided by engineer. */
-"This is your vertcoin balance. Vertcoin is a currency. The exchange rate changes with the market." = "Ez a vertcoin egyenleged. A Vertcoin egy valuta. Az átváltási árfolyam a piaci körülményeknek megfelelően változik.";
+"This is your mobilecash balance. Mobilecash is a currency. The exchange rate changes with the market." = "Ez a mobilecash egyenleged. A Mobilecash egy valuta. Az átváltási árfolyam a piaci körülményeknek megfelelően változik.";
 
 /* No comment provided by engineer. */
 "this payment address is already in your wallet" = "ez a cím eleve a saját tárcádhoz tartozik";
@@ -494,7 +494,7 @@
 "WRITE DOWN YOUR RECOVERY PHRASE" = "ÍRD LE A HELYREÁLLÍTÁSI KÓDMONDATODAT";
 
 /* No comment provided by engineer. */
-"you received vertcoin!" = "vertcoint kaptál!";
+"you received mobilecash!" = "mobilecasht kaptál!";
 
 /* No comment provided by engineer. */
 "Your wallet may be out of sync.\nThis can often be fixed by rescanning the blockchain." = "A tárcád nincs szinkronban.\nÁltalában segít az, ha újraszkenneled a blockchaint.";

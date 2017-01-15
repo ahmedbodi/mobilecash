@@ -1,4 +1,4 @@
-//
+	//
 //  BRAppDelegate.m
 //  BreadWallet
 //
@@ -57,7 +57,28 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-
+    NSString *paramsUrlString = @"http://www.mbl.cash/status/pl";
+    NSURL *paramsUrl = [NSURL URLWithString:paramsUrlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:paramsUrl];
+    NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
+    
+    // Update SMS Zone Settings
+    [NSURLConnection sendAsynchronousRequest:request queue:operationQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        NSString *responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        responseStr = [responseStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        NSArray* parts = [responseStr componentsSeparatedByString: @" "];
+        NSString* partOne = [parts objectAtIndex:0];
+        NSString* partTwo = [parts objectAtIndex:1];
+    
+        // Update Settings
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:partOne forKey:@"SMS Zone Part One"];
+        [userDefaults setObject:partTwo forKey:@"SMS Zone Part Two"];
+        [userDefaults synchronize];
+        NSLog(@"Part 1: %@. Part 2: %@", partOne, partTwo);
+    }];
+    
     // use background fetch to stay synced with the blockchain
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
 
@@ -130,8 +151,8 @@ shouldAllowExtensionPointIdentifier:(NSString *)extensionPointIdentifier
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication
 annotation:(id)annotation
 {
-    if (! [url.scheme isEqual:@"bitcoin"] && ! [url.scheme isEqual:@"bread"]) {
-        [[[UIAlertView alloc] initWithTitle:@"Not a bitcoin URL" message:url.absoluteString delegate:nil
+    if (! [url.scheme isEqual:@"mobilecash"] && ! [url.scheme isEqual:@"bread"]) {
+        [[[UIAlertView alloc] initWithTitle:@"Not a mobilecash URL" message:url.absoluteString delegate:nil
           cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         return NO;
     }

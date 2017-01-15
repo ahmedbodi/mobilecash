@@ -113,16 +113,16 @@ enum BRHTTPServerError: Error {
         
         let sfd = socket(AF_INET, SOCK_STREAM, 0)
         if sfd == -1 {
-            throw BRHTTPServerError.socketCreationFailed
+            //throw BRHTTPServerError.socketCreationFailed
         }
         var v: Int32 = 1
         if setsockopt(sfd, SOL_SOCKET, SO_REUSEADDR, &v, socklen_t(MemoryLayout<Int32>.size)) == -1 {
-            _ = Darwin.shutdown(sfd, SHUT_RDWR)
-            close(sfd)
-            throw BRHTTPServerError.socketCreationFailed
+            //_ = Darwin.shutdown(sfd, SHUT_RDWR)
+            //close(sfd)
+            //throw BRHTTPServerError.socketCreationFailed
         }
         v = 1
-        setsockopt(sfd, SOL_SOCKET, SO_NOSIGPIPE, &v, socklen_t(MemoryLayout<Int32>.size))
+        //setsockopt(sfd, SOL_SOCKET, SO_NOSIGPIPE, &v, socklen_t(MemoryLayout<Int32>.size))
         var addr = sockaddr_in()
         addr.sin_len = __uint8_t(MemoryLayout<sockaddr_in>.size)
         addr.sin_family = sa_family_t(AF_INET)
@@ -223,7 +223,7 @@ enum BRHTTPServerError: Error {
                     break
                 }
                 var v: Int32 = 1
-                setsockopt(cli_fd, SOL_SOCKET, SO_NOSIGPIPE, &v, socklen_t(MemoryLayout<Int32>.size))
+                //setsockopt(cli_fd, SOL_SOCKET, SO_NOSIGPIPE, &v, socklen_t(MemoryLayout<Int32>.size))
                 self.addClient(cli_fd)
                 // print("startup: \(cli_fd)")
                 self.Q.async { () -> Void in
